@@ -60,6 +60,10 @@
   .verdict .label {font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em}
   .verdict .value {font-size:26px;font-weight:800;margin-top:6px}
   .verdict .sub {font-size:12px;color:var(--text-dim);margin-top:6px}
+  .section-notes{width:100%;background:var(--panel-2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px;font:13px/1.5 inherit;resize:vertical}
+  .section-notes:hover{border-color:#868e96}
+  .section-notes:focus{outline:none;border-color:var(--accent)}
+  .section-note-status{font-size:11px;color:var(--text-dim);margin-top:6px;min-height:16px}
 </style>
 </head>
 <body>
@@ -105,6 +109,11 @@
       </ul>
       <p>The hypothesis under review was that these figures represented actual financial irregularities supported by the HOA ledger.</p>
     </div>
+    <div class="legal-section">
+      <h3>Section Notes</h3>
+      <textarea class="section-notes" data-section="Case Overview" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-note-status"></div>
+    </div>
   </div>
 
   <div class="section">
@@ -138,8 +147,33 @@
     </div>
   </div>
 
+    <div class="legal-section">
+      <h3>Section Notes</h3>
+      <textarea class="section-notes" data-section="Findings of Fact" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-note-status"></div>
+    </div>
+  </div>
+
   <div class="section">
     <h2>Evidence & Exhibits</h2>
+    <div class="legal-section">
+      <h3>Section Notes</h3>
+      <textarea class="section-notes" data-section="Evidence & Exhibits" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-note-status"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Legal Analysis</h2>
+    <div class="legal-section">
+      <h3>Section Notes</h3>
+      <textarea class="section-notes" data-section="Legal Analysis" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-note-status"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Conclusion</h2>
     <div class="legal-section">
       <h3>Exhibits</h3>
       <div class="exhibit">
@@ -212,10 +246,20 @@
       <h3>Reasoning</h3>
       <p>The extracted ledger documents demonstrate that the $42,300 monthly Special Activity draw is a budgeted, authorized line item with zero variance for January–April 2025. No extracted file contains the $92,300 or $136,522 figures alleged. Without the exact TownCryer.biz article URL and cited exhibits that reconcile to this ledger, the hypothesis cannot be sustained.</p>
     </div>
+    <div class="legal-section" style="margin-top:10px">
+      <h3>Section Notes</h3>
+      <textarea class="section-notes" data-section="Conclusion" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-note-status"></div>
+    </div>
   </div>
 
   <div class="section">
     <h2>Conditions to Reopen</h2>
+    <div class="legal-section">
+      <h3>Section Notes</h3>
+      <textarea class="section-notes" data-section="Conditions to Reopen" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-note-status"></div>
+    </div>
     <div class="legal-section">
       <h3>Flip Requirements</h3>
       <ul>
@@ -228,5 +272,36 @@
 
 
 </div>
+
+<script>
+(function () {
+  const STORAGE_KEY = 'hoa_dashboard_section_notes';
+  const notes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(notes));
+  }
+  function setStatus(el, text) {
+    el.textContent = text;
+  }
+  document.querySelectorAll('.section-notes').forEach(function (el) {
+    const key = el.getAttribute('data-section');
+    if (!key) return;
+    if (notes[key]) el.value = notes[key];
+    el.addEventListener('input', function () {
+      notes[key] = el.value;
+      save();
+    });
+    el.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'enter') {
+        notes[key] = el.value;
+        save();
+        const statusEl = el.parentElement.querySelector('.section-note-status');
+        if (statusEl) setStatus(statusEl, 'Saved ' + new Date().toLocaleString());
+      }
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
