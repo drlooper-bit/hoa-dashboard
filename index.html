@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HEDSLAPTOP/Hermes — HOA Legal Case Dashboard</title>
+<style>
+  :root{
+    --bg:#0b0f14;--panel:#11151b;--panel-2:#161b23;--text:#e8ecf1;--text-dim:#9aa3ad;--border:#232a35;
+    --accent:#7aa7ff;--ok:#6ecf8e;--warn:#f5c26b;--err:#f28b82;
+    --pill-ok:#1c3a2a;--pill-warn:#3b3120;--pill-err:#401c1f;
+  }
+  * {box-sizing:border-box}
+  html,body {margin:0;background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  .wrap {max-width:1200px;margin:0 auto;padding:24px 22px}
+  header {display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border);margin-bottom:18px}
+  header h1 {font-size:18px;margin:0}
+  header .meta {color:var(--text-dim);font-size:12px}
+  .case-caption {background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:22px}
+  .case-caption h2 {font-size:16px;margin:0 0 8px 0;color:var(--accent)}
+  .case-caption .caption-line {display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:13px}
+  .case-caption .caption-label {color:var(--text-dim);font-weight:600}
+  .kpis {display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+  .kpi {background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+  .kpi .label {color:var(--text-dim);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  .kpi .value {font-size:28px;font-weight:700;margin-top:6px}
+  .kpi .value.active {color:var(--warn)}
+  .kpi .value.ok {color:var(--ok)}
+  .section {margin-bottom:28px}
+  .section h2 {font-size:15px;margin:0 0 10px 0;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em}
+  .cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px; margin-bottom: 18px;}
+  .card {background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .card.active {border-color:#5a4930}
+  .card-header {padding:14px 16px;background:var(--panel-2);display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .card-header strong {font-size:13px}
+  .card-body {padding:14px 16px;display:grid;gap:8px}
+  .row {display:flex;justify-content:space-between;gap:10px}
+  .row span:first-child {color:var(--text-dim);font-size:12px}
+  .row span:last-child {font-size:13px;font-weight:600;text-align:right}
+  .badge {font-size:11px;padding:3px 8px;border-radius:999px;font-weight:700;letter-spacing:.06em}
+  .badge.active {background:var(--pill-warn);color:#ffdb99}
+  .badge.completed {background:var(--pill-ok);color:#b9f0cc}
+  .badge.err {background:var(--pill-err);color:#f5c1c1}
+  .table-wrap {overflow:auto;border:1px solid var(--border);border-radius:12px;background:var(--panel)}
+  .table-wrap table {width:100%;border-collapse:separate;border-spacing:0}
+  .table-wrap th,.table-wrap td {padding:10px 12px;text-align:left;font-size:12px;border-bottom:1px solid var(--border);vertical-align:top}
+  .table-wrap th {color:var(--text-dim);font-weight:600;background:var(--panel-2);text-transform:uppercase;letter-spacing:.08em);font-size:11px}
+  .table-wrap tr:last-child td {border-bottom:none}
+  .count {font-variant-numeric:tabular-nums}
+  .done {font-size:12px;color:var(--text)}
+  .next {font-size:12px;color:#d6c89c}
+  .legal-section {background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:18px}
+  .legal-section h3 {font-size:14px;margin:0 0 10px 0;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
+  .legal-section p, .legal-section li {font-size:12.5px;color:var(--text);line-height:1.6}
+  .legal-section ul {margin:6px 0 0 18px;padding:0}
+  .exhibit {background:var(--panel-2);border-left:3px solid var(--accent);padding:10px 14px;margin:8px 0;border-radius:0 10px 10px 0}
+  .exhibit strong {font-size:12px;color:var(--text-dim)}
+  .exhibit code {font-size:11.5px;word-break:break-all}
+  .verdict {background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center}
+  .verdict .label {font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em}
+  .verdict .value {font-size:26px;font-weight:800;margin-top:6px}
+  .verdict .sub {font-size:12px;color:var(--text-dim);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>HEDSLAPTOP/Hermes — HOA Legal Case Dashboard</h1>
+    <div class="meta">Generated 2026-06-23T12:30:00-04:00 · Plantation at Leesburg HOA · Owned by HEDSLAPTOP</div>
+  </header>
+
+  <div class="case-caption">
+    <h2>Case Caption</h2>
+    <div class="caption-line"><span class="caption-label">Case Title</span><span>TownCryer.biz Excess Draw Claim — HOA Ledger Validation</span></div>
+    <div class="caption-line"><span class="caption-label">Subject Entity</span><span>Plantation at Leesburg HOA</span></div>
+    <div class="caption-line"><span class="caption-label">Investigator</span><span>HEDSLAPTOP / Hermes Agent (by Nous Research)</span></div>
+    <div class="caption-line"><span class="caption-label">Date of Determination</span><span>2026-06-23</span></div>
+    <div class="caption-line"><span class="caption-label">Status</span><span>CLOSED — REFUTED</span></div>
+    <div class="caption-line"><span class="caption-label">Confidence</span><span>HIGH</span></div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi">
+      <div class="label">Active HOA Sprints</div>
+      <div class="value active">1</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Completed</div>
+      <div class="value ok">4</div>
+    </div>
+    <div class="kpi">
+      <div class="label">Local HOA Library</div>
+      <div class="value ok">109 docs</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Case Overview</h2>
+    <div class="legal-section">
+      <h3>Allegation</h3>
+      <p>TownCryer.biz published claims that the Plantation at Leesburg HOA authorized a $42,300/month golf-course draw but systematically omitted those transfers from the HOA Balance Sheet and misclassified them as LLC revenue. The article specifically alleged:</p>
+      <ul>
+        <li>An excess draw of $92,300 for January 2025 (versus an authorized $42,300)</li>
+        <li>Total identified irregularities of $136,522</li>
+      </ul>
+      <p>The hypothesis under review was that these figures represented actual financial irregularities supported by the HOA ledger.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Findings of Fact</h2>
+    <div class="legal-section">
+      <h3>Fact 1 — Routine Special Activity Draw</h3>
+      <p>The HOA budgeting and accounting system includes account <code>400832 Special Activity Income</code>, which is used to record the monthly draw to support golf operations. This account appears consistently across multiple fiscal periods and is treated as a budgeted contra-revenue item.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Fact 2 — Verified Draw Amount</h3>
+      <p>For the period January 2025 through April 2025, the actual monthly postings equal the budgeted amount exactly:</p>
+      <ul>
+        <li>January 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
+        <li>February 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
+        <li>March 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
+        <li>April 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
+      </ul>
+      <p>Year-to-date actuals also match budget exactly through each month. There is no evidence of an additional $50,000 monthly excess in any extracted ledger.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Fact 3 — No $92,300 or $136,522 in Extracted Ledger</h3>
+      <p>A comprehensive search of <code>D:\HOA\PLA_Financials_extracted\</code> found no file containing the figures $92,300 or $136,522. The only draw-related amounts are the $42,300 monthly entries and related budget/actual line items.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Fact 4 — Separate Contra-Revenue Account</h3>
+      <p>Account <code>400109 Contra Revenue - Golf Course Allocation</code> exists as a distinct line item from <code>400832 Special Activity Income</code>. In January–March 2025, this account was blank; in April 2025 it showed $(209.00). These values are not the draw amount, nor do they combine to $92,300.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Fact 5 — FY2024 Transfer Total Corroborates Structured Transfers</h3>
+      <p>Entity files note FY2024 transfers totaling $695,271.77. This figure is documented as part of the operating structure, not as an irregular undisclosed draw. It does not support the $92,300 or $136,522 claim.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Evidence & Exhibits</h2>
+    <div class="legal-section">
+      <h3>Exhibits</h3>
+      <div class="exhibit">
+        <strong>Exhibit A</strong><br>
+        <code>D:\HOA\PLA_Financials_extracted\Jan-2025-Income-St.txt</code><br>
+        January 2025 Income Statement; 400832 Special Activity Income at $(42,300.00)
+      </div>
+      <div class="exhibit">
+        <strong>Exhibit B</strong><br>
+        <code>D:\HOA\PLA_Financials_extracted\Feb-2025-Income-St.txt</code><br>
+        February 2025 Income Statement; 400832 at $(42,300.00)
+      </div>
+      <div class="exhibit">
+        <strong>Exhibit C</strong><br>
+        <code>D:\HOA\PLA_Financials_extracted\March-25-Inc-St.txt</code><br>
+        March 2025 Income Statement; 400832 at $(42,300.00)
+      </div>
+      <div class="exhibit">
+        <strong>Exhibit D</strong><br>
+        <code>D:\HOA\PLA_Financials_extracted\April-2025-Financials.txt</code><br>
+        April 2025 Financials; 400832 at $(42,300.00)
+      </div>
+      <div class="exhibit">
+        <strong>Exhibit E</strong><br>
+        <code>D:\HOA\PLA_Financials_extracted\2025-Revised-Budget-02.21.25.txt</code><br>
+        FY2025 revised budget; same 400832 structure
+      </div>
+      <div class="exhibit">
+        <strong>Exhibit F</strong><br>
+        <code>D:\HOA\golf-course-llc.txt</code><br>
+        Entity description; $42,300/mo draw, FY2024 total $695,271.77
+      </div>
+      <div class="exhibit">
+        <strong>Exhibit G</strong><br>
+        <code>D:\HOA\PLA_Financials_extracted\Audited-2024-Operating-Income-St.txt</code><br>
+        Audited FY2024 operating fund; net deficit $(361,302.47)
+      </div>
+      <div class="exhibit">
+        <strong>Exhibit H</strong><br>
+        <code>D:\HOA\Plantation_HOA_Financial_Review.txt</code><br>
+        Financial review index; FY2024/2025 budget and balance sheet totals
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Legal Analysis</h2>
+    <div class="legal-section">
+      <h3>Corroboration vs. Proof</h3>
+      <p>The available extracted documents corroborate the existence of a budgeted, structured $42,300/month Special Activity draw. They do not corroborate an additional irregular $50,000 monthly excess, nor a $136,522 cumulative anomaly. The variance column in every monthly statement is zero for this line item, indicating full compliance with the approved budget.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Recharacterization Not Supported</h3>
+      <p>The claim that transfers were misclassified as LLC revenue is not borne out by the extracted statements. <code>400832 Special Activity Income</code> is recorded as a contra-revenue item in the HOA’s books. The existence of a separate golf course entity and related advances does not, without additional documentation, establish intentional misclassification or fraud.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Burden of Proof</h3>
+      <p>The party advancing the hypothesis must produce primary source documents that reconcile to the same ledger. A blog allegation without exhibits linking to the actual monthly statements, or without a consolidated statement combining <code>400832</code>, <code>400109</code>, and related due-to/from lines, does not meet the evidentiary threshold to alter the determination.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Conclusion</h2>
+    <div class="verdict">
+      <div class="label">Determination</div>
+      <div class="value" style="color:var(--err)">REFUTED</div>
+      <div class="sub">The hypothesis is unsupported by the financial evidence reviewed.</div>
+    </div>
+    <div class="legal-section" style="margin-top:18px">
+      <h3>Reasoning</h3>
+      <p>The extracted ledger documents demonstrate that the $42,300 monthly Special Activity draw is a budgeted, authorized line item with zero variance for January–April 2025. No extracted file contains the $92,300 or $136,522 figures alleged. Without the exact TownCryer.biz article URL and cited exhibits that reconcile to this ledger, the hypothesis cannot be sustained.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Conditions to Reopen</h2>
+    <div class="legal-section">
+      <h3>Flip Requirements</h3>
+      <ul>
+        <li>Verified TownCryer.biz article URL with cited exhibits referencing specific ledger entries</li>
+        <li>Consolidated statement combining account 400832, 400109, and any golf-course-related due-to/from or advance lines for the same period</li>
+        <li>Board minutes or management letters showing transfers channeled to the golf course outside the 400832 budget line</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Active Work Items & Next Steps</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Status</th>
+            <th>Next Step</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Apple Calendar</strong></td>
+            <td><span class="badge ok">Configured</span></td>
+            <td>Live CalDAV read available at <code>C:\tmp\apple_calendar_fetch.py</code></td>
+          </tr>
+          <tr>
+            <td><strong>Google Drive OAuth Upload</strong></td>
+            <td><span class="badge active">POSTPONED</span></td>
+            <td>User decision: keep local; dashboard still tracks this item</td>
+          </tr>
+          <tr>
+            <td><strong>Website monitoring pipeline</strong></td>
+            <td><span class="badge active">Blocked</span></td>
+            <td>Monitor plantationatleesburg.com for new docs</td>
+          </tr>
+          <tr>
+            <td><strong>Hermes config/CDP lock</strong></td>
+            <td><span class="badge active">Blocked</span></td>
+            <td>Resolve browser.cdp_url config lock</td>
+          </tr>
+          <tr>
+            <td><strong>Mar–Jun 2025 financials review</strong></td>
+            <td><span class="badge active">In progress</span></td>
+            <td>Cross-check draw claim against full monthly set</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>
