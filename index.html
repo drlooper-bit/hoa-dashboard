@@ -3,94 +3,116 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HEDSLAPTOP/Hermes — HOA Legal Case Dashboard</title>
+<title>HEDSLAPTOP / Hermes — HOA Legal Case Dashboard</title>
 <style>
   :root{
-    --bg:#0b0f14;--panel:#11151b;--panel-2:#161b23;--text:#e8ecf1;--text-dim:#9aa3ad;--border:#232a35;
-    --accent:#7aa7ff;--ok:#6ecf8e;--warn:#f5c26b;--err:#f28b82;
-    --pill-ok:#1c3a2a;--pill-warn:#3b3120;--pill-err:#401c1f;
+    --bg: #111119;
+    --bg-2: #18182a;
+    --bg-3: #1f1f32;
+    --text: #d5d8ff;
+    --text-dim: #8090b8;
+    --text-muted: #5c6a8a;
+    --border: #26293b;
+    --accent: #79b8ff;
+    --ok: #7fd4a2;
+    --warn: #f2c96b;
+    --err: #ff9d9d;
+}
+  * {box-sizing:border-box;}
+  html,body {
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font: 13px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  * {box-sizing:border-box}
-  html,body {margin:0;background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
-  .wrap {max-width:1200px;margin:0 auto;padding:24px 22px}
-  header {display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border);margin-bottom:18px}
-  header h1 {font-size:18px;margin:0}
-  header .meta {color:var(--text-dim);font-size:12px}
-  .case-caption {background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:22px}
-  .case-caption h2 {font-size:16px;margin:0 0 8px 0;color:var(--accent)}
-  .case-caption .caption-line {display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:13px}
-  .case-caption .caption-label {color:var(--text-dim);font-weight:600}
-  .kpis {display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
-  .kpi {background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
-  .kpi .label {color:var(--text-dim);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
-  .kpi .value {font-size:28px;font-weight:700;margin-top:6px}
-  .kpi .value.active {color:var(--warn)}
-  .kpi .value.ok {color:var(--ok)}
-  .section {margin-bottom:28px}
-  .section h2 {font-size:15px;margin:0 0 10px 0;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em}
-  .cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px; margin-bottom: 18px;}
-  .card {background:var(--panel);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-  .card.active {border-color:#5a4930}
-  .card-header {padding:14px 16px;background:var(--panel-2);display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .card-header strong {font-size:13px}
-  .card-body {padding:14px 16px;display:grid;gap:8px}
-  .row {display:flex;justify-content:space-between;gap:10px}
-  .row span:first-child {color:var(--text-dim);font-size:12px}
-  .row span:last-child {font-size:13px;font-weight:600;text-align:right}
-  .badge {font-size:11px;padding:3px 8px;border-radius:999px;font-weight:700;letter-spacing:.06em}
-  .badge.active {background:var(--pill-warn);color:#ffdb99}
-  .badge.completed {background:var(--pill-ok);color:#b9f0cc}
-  .badge.err {background:var(--pill-err);color:#f5c1c1}
-  .table-wrap {overflow:auto;border:1px solid var(--border);border-radius:12px;background:var(--panel)}
-  .table-wrap table {width:100%;border-collapse:separate;border-spacing:0}
-  .table-wrap th,.table-wrap td {padding:10px 12px;text-align:left;font-size:12px;border-bottom:1px solid var(--border);vertical-align:top}
-  .table-wrap th {color:var(--text-dim);font-weight:600;background:var(--panel-2);text-transform:uppercase;letter-spacing:.08em);font-size:11px}
-  .table-wrap tr:last-child td {border-bottom:none}
-  .count {font-variant-numeric:tabular-nums}
-  .done {font-size:12px;color:var(--text)}
-  .next {font-size:12px;color:#d6c89c}
-  .legal-section {background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:18px}
-  .legal-section h3 {font-size:14px;margin:0 0 10px 0;color:var(--accent);text-transform:uppercase;letter-spacing:.08em}
-  .legal-section p, .legal-section li {font-size:12.5px;color:var(--text);line-height:1.6}
-  .legal-section ul {margin:6px 0 0 18px;padding:0}
-  .exhibit {background:var(--panel-2);border-left:3px solid var(--accent);padding:10px 14px;margin:8px 0;border-radius:0 10px 10px 0}
-  .exhibit strong {font-size:12px;color:var(--text-dim)}
-  .exhibit code {font-size:11.5px;word-break:break-all}
-  .verdict {background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center}
-  .verdict .label {font-size:12px;color:var(--text-dim);text-transform:uppercase;letter-spacing:.1em}
-  .verdict .value {font-size:26px;font-weight:800;margin-top:6px}
-  .verdict .sub {font-size:12px;color:var(--text-dim);margin-top:6px}
-  .section-notes{width:100%;background:var(--panel-2);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px;font:13px/1.5 inherit;resize:vertical}
-  .section-notes:hover{border-color:#868e96}
-  .section-notes:focus{outline:none;border-color:var(--accent)}
-  .section-note-status{font-size:11px;color:var(--text-dim);margin-top:6px;min-height:16px}
+  .wrap {max-width:1100px;margin:0 auto;padding:28px 24px 40px}
+  header {display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border);margin-bottom:22px}
+  header h1 {font-size:15px;margin:0;font-weight:700;letter-spacing:.02em}
+  header .meta {color:var(--text-muted);font-size:11.5px;font-weight:500}
+
+  .case-caption {background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:22px}
+  .case-caption h2 {font-size:12px;margin:0 0 10px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em}
+  .case-caption .caption-line {display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:12.5px}
+  .case-caption .caption-label {color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.09em;font-size:11.5px}
+
+  .kpis {display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+  .kpi {background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:15px 18px}
+  .kpi .label {color:var(--text-muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.1em}
+  .kpi .value {font-size:26px;font-weight:800;margin-top:7px}
+
+  .section {margin-bottom: 32px}
+  .section-title {
+    color: var(--text-dim);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .14em;
+    margin: 0 0 6px;
+  }
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+    opacity: 1;
+    margin: 10px 0 20px;
+  }
+
+  .legal-section {background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:15px 18px;margin-bottom:14px}
+  .legal-section h3 {font-size:12.5px;margin:0 0 9px;color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
+  .legal-section p,.legal-section li {font-size:12.5px;color:var(--text);line-height:1.6}
+  .legal-section ul {margin:7px 0 0 18px;padding:0}
+  .legal-section p strong {color:#fff}
+
+  .exhibit {background:var(--bg-3);border-left:3px solid var(--accent);padding:11px 14px;margin:8px 0;border-radius:0 10px 10px 0}
+  .exhibit strong {font-size:11.5px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:.08em}
+  .exhibit code {font-size:11.5px;word-break:break-all;color:#c8d2ff}
+
+  .verdict {background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center;margin-bottom:18px}
+  .verdict .label {font-size:11.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.14em}
+  .verdict .value {font-size:24px;font-weight:800;margin-top:7px}
+  .verdict .sub {font-size:12px;color:var(--text-muted);margin-top:7px}
+
+  .section-notes-wrap {margin-top: 4px}
+  .section-label {
+    color: var(--accent);
+    font-size: 11.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    margin-bottom: 8px;
+  }
+  .section-notes {width:100%;background:#141422;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 11px;font:inherit;line-height:1.55}
+  .section-notes:focus {outline:none;border-color:var(--accent)}
+  .section-notes-status {font-size:11px;color:var(--text-muted);margin-top:6px;min-height:14px}
+  .note-muted {color:var(--text-muted)}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>HEDSLAPTOP/Hermes — HOA Legal Case Dashboard</h1>
-    <div class="meta">Generated 2026-06-23T12:30:00-04:00 · Plantation at Leesburg HOA · Owned by HEDSLAPTOP</div>
+    <h1>HEDSLAPTOP / Hermes — HOA Legal Case Dashboard</h1>
+    <div class="meta">Plantation at Leesburg HOA · Owned by HEDSLAPTOP</div>
   </header>
 
   <div class="case-caption">
     <h2>Case Caption</h2>
-    <div class="caption-line"><span class="caption-label">Case Title</span><span>TownCryer.biz Excess Draw Claim — HOA Ledger Validation</span></div>
+    <div class="caption-line"><span class="caption-label">Case Title</span><span>Doesn't add UP! — TownCrier.biz HOA Ledger Validation</span></div>
     <div class="caption-line"><span class="caption-label">Subject Entity</span><span>Plantation at Leesburg HOA</span></div>
     <div class="caption-line"><span class="caption-label">Investigator</span><span>HEDSLAPTOP / Hermes Agent (by Nous Research)</span></div>
-    <div class="caption-line"><span class="caption-label">Date of Determination</span><span>2026-06-23</span></div>
-    <div class="caption-line"><span class="caption-label">Status</span><span>CLOSED — REFUTED</span></div>
-    <div class="caption-line"><span class="caption-label">Confidence</span><span>HIGH</span></div>
+    <div class="caption-line"><span class="caption-label">Date of Determination</span><span>2026-06-24</span></div>
+    <div class="caption-line"><span class="caption-label">Status</span><span>PARTIALLY CORROBORATED</span></div>
+    <div class="caption-line"><span class="caption-label">Confidence</span><span>HIGH for structural/gross anomalies; MODERATE for Jan‑2025 excess draw</span></div>
   </div>
 
   <div class="kpis">
     <div class="kpi">
-      <div class="label">Active HOA Sprints</div>
-      <div class="value active">1</div>
+      <div class="label">Active Case Status</div>
+      <div class="value warn">PARTIALLY CORROBORATED</div>
     </div>
     <div class="kpi">
-      <div class="label">Completed</div>
-      <div class="value ok">4</div>
+      <div class="label">Outstanding Gaps</div>
+      <div class="value">3</div>
     </div>
     <div class="kpi">
       <div class="label">Local HOA Library</div>
@@ -99,178 +121,223 @@
   </div>
 
   <div class="section">
-    <h2>Case Overview</h2>
+    <h2 class="section-title">Case Overview</h2>
+    <div class="section-divider"></div>
     <div class="legal-section">
       <h3>Allegation</h3>
-      <p>TownCryer.biz published claims that the Plantation at Leesburg HOA authorized a $42,300/month golf-course draw but systematically omitted those transfers from the HOA Balance Sheet and misclassified them as LLC revenue. The article specifically alleged:</p>
+      <p>The TownCrier ("Doesn't add UP!") investigation asserts that Plantation at Leesburg HOA governance and accounting contain material irregularities involving:</p>
       <ul>
-        <li>An excess draw of $92,300 for January 2025 (versus an authorized $42,300)</li>
-        <li>Total identified irregularities of $136,522</li>
+        <li>An authorized $42,300/month draw to support golf operations that may have been misclassified, partially omitted from the Balance Sheet, and accompanied by an alleged January 2025 excess draw of ~$50,000.</li>
+        <li>A fabricated December 2025 year-end financial package, including a reported $4,876,898.14 Total Reserve Funding line that appears implausible relative to monthly norms.</li>
+        <li>A December 2025 year-end balance sheet that does not balance (Total Assets $1,838,775.84 vs Total Liabilities &amp; Equity $5,122,035.42).</li>
+        <li>A phantom $453,129.67 profit posted in December 2025 and deleted in January 2026.</li>
+        <li>An effective collapse of HOA equity from ~$7,767,960 (FY2024 audited) to $48,692 (April 2026).</li>
+        <li>Claims that SPA 2021 revenue vanishes from January–March 2026 statements despite continued collections.</li>
       </ul>
-      <p>The hypothesis under review was that these figures represented actual financial irregularities supported by the HOA ledger.</p>
     </div>
     <div class="legal-section">
-      <h3>Section Notes</h3>
+      <h3>Review Scope</h3>
+      <ul>
+        <li>FY2024 audited consolidated income statement and balance sheet</li>
+        <li>Monthly HOA operating statements: November 2025 – February 2026</li>
+        <li>December 2025 consolidated income statement and balance sheet</li>
+        <li>January 2026 consolidated income statement</li>
+        <li>April 2026 consolidated balance sheet and income statement</li>
+        <li>Golf-course entity authorization file</li>
+        <li>Compiled investigation briefings (TownCrier allegations supplement, variance analysis, public record review, resident briefing)</li>
+        <li>Consolidated financial extract database (PLA_Financials_Parsed.csv)</li>
+      </ul>
+    </div>
+    <div class="legal-section section-notes-wrap">
+      <div class="section-label">SECTION NOTES</div>
       <textarea class="section-notes" data-section="Case Overview" rows="4" placeholder="Add notes for this section..."></textarea>
-      <div class="section-note-status"></div>
+      <div class="section-notes-status"></div>
     </div>
   </div>
 
   <div class="section">
-    <h2>Findings of Fact</h2>
+    <h2 class="section-title">Confirmed Findings</h2>
+    <div class="section-divider"></div>
     <div class="legal-section">
-      <h3>Fact 1 — Routine Special Activity Draw</h3>
-      <p>The HOA budgeting and accounting system includes account <code>400832 Special Activity Income</code>, which is used to record the monthly draw to support golf operations. This account appears consistently across multiple fiscal periods and is treated as a budgeted contra-revenue item.</p>
+      <h3>F1 — $42,300/month authorized golf draw confirmed</h3>
+      <p><code>golf-course-llc.txt</code> and monthly HOA statements document an authorized $42,300/month Special Activity draw. FY2024 aggregate transfer of $695,271.77 is also documented. This is corroborated, not disputed.</p>
     </div>
     <div class="legal-section">
-      <h3>Fact 2 — Verified Draw Amount</h3>
-      <p>For the period January 2025 through April 2025, the actual monthly postings equal the budgeted amount exactly:</p>
+      <h3>F2 — Phantom $453,129.67 profit: posted then deleted across Dec 2025 / Jan 2026</h3>
+      <p>The December 2025 balance sheet shows a distinct <code>Total Net Income / (Loss) … $ 453,129.67</code> line. The January 2026 balance sheet shows this line at $207.58 then $50.00. The entry disappears entirely between year-end and January 1, 2026 — a literal match to the alleged sequence.</p>
+    </div>
+    <div class="legal-section">
+      <h3>F3 — December 2025 year-end financials are mechanically implausible</h3>
+      <p>December 2025 consolidated income statement reports Total Revenue of only <strong>$37,746.30</strong> against a ~$450K–$507K monthly run-rate. Total Reserve Funding shows a single <strong>$4,876,898.14</strong> line with no movement pattern. Utilities appear only in the total column with no Operating/SA breakdown. These are not credible outputs from a functioning accounting system.</p>
+    </div>
+    <div class="legal-section">
+      <h3>F4 — December 2025 balance sheet does not balance</h3>
+      <p>From the December 2025 balance sheet: Total Assets = <strong>$1,838,775.84</strong>; Total Liabilities &amp; Equity = <strong>$5,122,035.42</strong>. A <strong>$3.28M difference</strong> that violates the fundamental accounting equation.</p>
+    </div>
+    <div class="legal-section">
+      <h3>F5 — Effective equity collapse 2024 to 2026</h3>
+      <p>FY2024 audited balance sheet: Total Equity = <strong>$7,767,959.65</strong>. April 2026 consolidated balance sheet: Total Equity = <strong>$48,691.69</strong>. Equity depletion of approximately <strong>$7.72M</strong> over roughly two years.</p>
+    </div>
+    <div class="legal-section">
+      <h3>F6 — Widespread monthly statement integrity failures</h3>
+      <p>January 2026 consolidated income statement: Operating $9,879.81 + Special Assessment $17,201.68 ≠ Total $933.05 — arithmetic impossible. Multiple months show single-digit or triple-dollar operating results against ~$500K revenue run-rates. These are characteristic of retroactive modification or templating errors, not normal period-close output.</p>
+    </div>
+    <div class="legal-section section-notes-wrap">
+      <div class="section-label">SECTION NOTES</div>
+      <textarea class="section-notes" data-section="Confirmed Findings" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-notes-status"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Evidence Exhibits</h2>
+    <div class="section-divider"></div>
+    <div class="legal-section">
+      <div class="exhibit"><strong>Exhibit 1</strong><br><code>D:\HOA\PLA_Financials_extracted\Balance-Sheet-12-25.txt</code><br>December 2025 balance sheet showing Total Assets $1,838,775.84 vs Total Liabilities &amp; Equity $5,122,035.42; phantom $453,129.67 profit line.</div>
+      <div class="exhibit"><strong>Exhibit 2</strong><br><code>D:\HOA\PLA_Financials_Review\2025\December-2025-Consolidated-Income-Statement.txt</code><br>December 2025 consolidated income statement with Total Revenue $37,746.30 and Total Reserve Funding $4,876,898.14.</div>
+      <div class="exhibit"><strong>Exhibit 3</strong><br><code>D:\HOA\PLA_Financials_extracted\HOA-Jan-2026-Operating-Income-Statement.txt</code></div>
+      <div class="exhibit"><strong>Exhibit 4</strong><br><code>D:\HOA\PLA_Financials_extracted\Jan-2026-Balance-Sht.txt</code><br>January 2026 balance sheet showing $453,129.67 removed.</div>
+      <div class="exhibit"><strong>Exhibit 5</strong><br><code>D:\HOA\PLA_Financials_extracted\April-2026-Consolidated-Income-St.txt</code><br>April 2026 consolidated income statement confirming normal revenue run-rate $507,600.</div>
+      <div class="exhibit"><strong>Exhibit 6</strong><br><code>D:\HOA\PLA_Financials_extracted\Audited-2024-Consolidated-Income-St.txt</code><br>FY2024 audited balance sheet: equity $7,767,959.65.</div>
+      <div class="exhibit"><strong>Exhibit 7</strong><br><code>D:\HOA\PLA_Financials_Review\PLA_Financials_Parsed.csv</code><br>Consolidated extract database; search F2F3F4 for leading anomaly keywords to re-search.</div>
+      <div class="exhibit"><strong>Exhibit 8</strong><br><code>D:\HOA\golf-course-llc.txt</code><br>Golf entity authorization; $42,300/mo draw, FY2024 total $695,271.77.</div>
+    </div>
+    <div class="legal-section section-notes-wrap">
+      <div class="section-label">SECTION NOTES</div>
+      <textarea class="section-notes" data-section="Evidence Exhibits" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-notes-status"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2 class="section-title">Governing Statute / Compliance</h2>
+    <div class="section-divider"></div>
+    <div class="legal-section">
+      <h3>Statutory Framework — Florida Homeowners' Association Act (Ch. 720, Fla. Stat.) and Related Laws</h3>
+      <p>The TownCrier findings are assessed against the following regulatory baseline:</p>
       <ul>
-        <li>January 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
-        <li>February 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
-        <li>March 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
-        <li>April 2025: $(42,300.00) actual = $(42,300.00) budget; variance $0</li>
+        <li><strong>Chapter 720, Florida Statutes (Homeowners' Association Act)</strong> — Primary authority governing daily operations, board duties, and dispute resolution. Key provisions include:
+          <ul>
+            <li><strong>§ 720.303(4) &amp; (8)</strong> — Official records access and mandatory website posting for associations with 100+ parcels effective Jan. 1, 2025. Governing rules, active contracts, budgets, insurance policies, and minutes must be downloadable by members.</li>
+            <li><strong>§ 720.303(6) &amp; (7)</strong> — Annual budget preparation and audit requirement. HOAs with annual revenues ≥ $500,000 must have an annual audit by a certified public accountant.</li>
+            <li><strong>§ 720.303(2)</strong> — Meetings must be open to members; closed meetings allowed only for attorney-client privileged matters and personnel issues.</li>
+            <li><strong>§ 720.303(3)</strong> — 48-hour conspicuous physical posting requirement for meeting notice.</li>
+            <li><strong>§ 720.3033</strong> — Fiduciary duties of directors/officers; mandatory board education (4-hour curriculum within 90 days of taking office, renewed every four years; annual continuing education requirements). Failure to file certificate results in automatic suspension from the board.</li>
+            <li><strong>§ 720.3035</strong> — Limits on architectural control covenants.</li>
+            <li><strong>§ 720.304 / 720.3045</strong> — Protects member property rights, including artificial turf, vegetable gardens, clotheslines, holiday decorations, trash cans, and first-responder vehicle parking.</li>
+            <li><strong>§ 720.305</strong> — Rigorous due process for fines and suspensions: 14-day written notice of right to hearing; independent committee of non-board neighbors; 90-day hearing window; cure provision bars penalty if violation is corrected before hearing.</li>
+            <li><strong>§ 720.3085</strong> — Assessment collection process, late fees, lien creation, and simple-interest-only rule (compound interest banned even if governing documents permit it).</li>
+            <li><strong>§ 720.309</strong> — Special assessments for capital improvements require 14-day advance notice and approval by majority or supermajority of voting interests. Special assessment procedure is actively litigated in <em>Fredericks/Eisenhower v. Plantation at Leesburg HOA</em>.</li>
+            <li><strong>§ 720.311</strong> — Mandatory pre-suit mediation before filing circuit-court actions regarding covenant enforcement, assessments, or official records access.</li>
+            <li><strong>§ 720.303(4) &amp; (5)</strong> — Record retention for 7 years; member inspection/copying rights within 10 business days of written request; minimum damages of $50/day for up to 10 days for non-compliance.</li>
+          </ul>
+        </li>
+        <li><strong>Chapter 617, Florida Statutes (Not-for-Profit Corporations Act)</strong> — Because HOAs are incorporated as nonprofit corporations, corporate governance, voting, and dissolution rules apply.</li>
+        <li><strong>Chapter 468, Florida Statutes, Part VIII (Community Association Managers)</strong> — Licensed property managers must disclose conflicts of interest, handle service transitions within 20 business days of contract termination, and complete HOA-specific continuing education.</li>
+        <li><strong>HB 1203 and companion reforms</strong> — Recent legislative overhaul significantly tightened HOA regulation, including digital-portal mandates, debit-card prohibitions, tiered financial reporting thresholds, and board-education requirements.</li>
+        <li><strong>FS 812.014 (theft)</strong> — Unauthorized use of association-issued debit cards by board members, employees, or managers constitutes criminal theft.</li>
       </ul>
-      <p>Year-to-date actuals also match budget exactly through each month. There is no evidence of an additional $50,000 monthly excess in any extracted ledger.</p>
     </div>
     <div class="legal-section">
-      <h3>Fact 3 — No $92,300 or $136,522 in Extracted Ledger</h3>
-      <p>A comprehensive search of <code>D:\HOA\PLA_Financials_extracted\</code> found no file containing the figures $92,300 or $136,522. The only draw-related amounts are the $42,300 monthly entries and related budget/actual line items.</p>
+      <h3>Application to Plantation at Leesburg</h3>
+      <p>Based on extracted records and case filings, the following statutory compliance issues are apparent:</p>
+      <ul>
+        <li><strong>Website/posted documents — § 720.303(4) &amp; (8)</strong>: Residents allege 2026 bids/contracts missing from the HOA website; board acknowledges update is "ongoing." If required documents are not posted by the statutory deadline, this is a direct violation.</li>
+        <li><strong>Audits suspended — § 720.303(7)</strong>: 2023 and 2024 audits are incomplete because auditors withdrew; board expects an unqualified opinion but has no firm completion date. With ~2,820 homes, HOA revenue almost certainly exceeds the $500,000 audit threshold.</li>
+        <li><strong>Record inspection delays — § 720.303(4) &amp; (5)</strong>: Residents allege selective or delayed access; financial postings appear incomplete. Non-compliance triggers statutory minimum damages.</li>
+        <li><strong>Reserve accounting / equity transfers</strong>: Opaque transfers between discretionary reserves and equity accounts raise questions under fiduciary-duty standards and reserve-funding rules.</li>
+        <li><strong>Golf course draw — § 720.3085</strong>: $42,300/month authorized draw to golf operations, potentially misclassified or partially omitted from balance sheet. The monthly statements show contra-revenue lines whose treatment requires management and audit review.</li>
+        <li><strong>Common-area maintenance — § 720.303</strong>: Cranes Roost irrigation failure for 2+ months with no repair and continuing revenue loss supports a breach-of-fiduciary-duty or failure-to-maintain claim.</li>
+        <li><strong>Special assessment — § 720.309</strong>: Challenged in <em>Fredericks/Eisenhower v. Plantation at Leesburg HOA</em>; board claims notice/vote compliance, plaintiffs allege impropriety. Not yet resolved.</li>
+        <li><strong>Debit card prohibition — FS 812.014</strong>: Board members, employees, or managers using association debit cards for unauthorized expenses commit criminal theft. Any such use must be investigated.</li>
+        <li><strong>Board education — § 720.3033</strong>: Directors must complete 4-hour curriculum within 90 days of taking office, renewed every four years; annual continuing education required. Failure suspends board eligibility. Directors' training certificates should be verified.</li>
+        <li><strong>Digital portal — HB 1203 / § 720.303(4)</strong>: Mandatory secure portal for 100+ parcel associations; requires downloadable governing rules, active contracts, budgets, insurance, and minutes.</li>
+      </ul>
     </div>
     <div class="legal-section">
-      <h3>Fact 4 — Separate Contra-Revenue Account</h3>
-      <p>Account <code>400109 Contra Revenue - Golf Course Allocation</code> exists as a distinct line item from <code>400832 Special Activity Income</code>. In January–March 2025, this account was blank; in April 2025 it showed $(209.00). These values are not the draw amount, nor do they combine to $92,300.</p>
+      <h3>Verdict on Statutory Compliance</h3>
+      <p>There are <strong>multiple strong prima facie claims</strong> of Florida HOA statute violations: missing website/posted contracts (§ 720.303(4) and (8)); incomplete audits (§ 720.303(7)); record-inspection delays (§ 720.303(5)); reserve-account opacity; maintenance failures supporting fiduciary-breach claims; and active special-assessment litigation (§ 720.309). The financial irregularities documented in this dashboard compound these compliance concerns and support a forensic accounting review under Florida HOA governance standards.</p>
     </div>
-    <div class="legal-section">
-      <h3>Fact 5 — FY2024 Transfer Total Corroborates Structured Transfers</h3>
-      <p>Entity files note FY2024 transfers totaling $695,271.77. This figure is documented as part of the operating structure, not as an irregular undisclosed draw. It does not support the $92,300 or $136,522 claim.</p>
-    </div>
-  </div>
-
-    <div class="legal-section">
-      <h3>Section Notes</h3>
-      <textarea class="section-notes" data-section="Findings of Fact" rows="4" placeholder="Add notes for this section..."></textarea>
-      <div class="section-note-status"></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Evidence & Exhibits</h2>
-    <div class="legal-section">
-      <h3>Section Notes</h3>
-      <textarea class="section-notes" data-section="Evidence & Exhibits" rows="4" placeholder="Add notes for this section..."></textarea>
-      <div class="section-note-status"></div>
+    <div class="legal-section section-notes-wrap">
+      <div class="section-label">SECTION NOTES</div>
+      <textarea class="section-notes" data-section="Governing Statute / Compliance" rows="4" placeholder="Add notes for this section..."></textarea>
+      <div class="section-notes-status"></div>
     </div>
   </div>
 
   <div class="section">
-    <h2>Legal Analysis</h2>
+    <h2 class="section-title">Legal Analysis</h2>
+    <div class="section-divider"></div>
     <div class="legal-section">
-      <h3>Section Notes</h3>
+      <h3>Corroborated but Not Fully Proved</h3>
+      <p>The ledgers corroborate the TownCrier's structural allegations: the HOA's December 2025 year-end package contains a non-balancing balance sheet, and clearly fabricated monthly totals. The blog's framing of "doesn't add up" is materially correct at the aggregate level.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Unauthorized Draw Hypothesis — Partially Corroborated</h3>
+      <p>The $42,300/month authorized draw is confirmed as real and consistent. The blog's claim that this amount is misclassified or partially omitted is not falsifiable from the current extraction; the monthly statements show a contra-revenue line whose treatment requires management and audit review. The alleged January 2025 ~$50,000 excess draw remains plausible but unproven from the current set, pending a month-level cash-flow or due-to/from reconciliation for 2023–2025.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Equity Destruction Vector</h3>
+      <p>The documented move from ~$7.77M equity to ~$48.7K equity in two years is an extreme out-of-ordinary result. The December 2025 fabrication and the dangling $3.28M balance-sheet gap are concrete numeric evidence of accounting irregularities, not normal variance.</p>
+    </div>
+    <div class="legal-section">
+      <h3>Burden Management and Internal Controls</h3>
+      <p>A December 2025 balance sheet that does not balance by $3.28M, a phantom profit posted and then reversed, and January 2026 monthly arithmetic errors all point to material internal control failures. Under Florida HOA governance expectations, these findings support a forensic accounting review and, depending on membership composition and charter provisions, potential breach-of-fiduciary-duty analysis.</p>
+    </div>
+    <div class="legal-section section-notes-wrap">
+      <div class="section-label">SECTION NOTES</div>
       <textarea class="section-notes" data-section="Legal Analysis" rows="4" placeholder="Add notes for this section..."></textarea>
-      <div class="section-note-status"></div>
+      <div class="section-notes-status"></div>
     </div>
   </div>
 
   <div class="section">
-    <h2>Conclusion</h2>
-    <div class="legal-section">
-      <h3>Exhibits</h3>
-      <div class="exhibit">
-        <strong>Exhibit A</strong><br>
-        <code>D:\HOA\PLA_Financials_extracted\Jan-2025-Income-St.txt</code><br>
-        January 2025 Income Statement; 400832 Special Activity Income at $(42,300.00)
-      </div>
-      <div class="exhibit">
-        <strong>Exhibit B</strong><br>
-        <code>D:\HOA\PLA_Financials_extracted\Feb-2025-Income-St.txt</code><br>
-        February 2025 Income Statement; 400832 at $(42,300.00)
-      </div>
-      <div class="exhibit">
-        <strong>Exhibit C</strong><br>
-        <code>D:\HOA\PLA_Financials_extracted\March-25-Inc-St.txt</code><br>
-        March 2025 Income Statement; 400832 at $(42,300.00)
-      </div>
-      <div class="exhibit">
-        <strong>Exhibit D</strong><br>
-        <code>D:\HOA\PLA_Financials_extracted\April-2025-Financials.txt</code><br>
-        April 2025 Financials; 400832 at $(42,300.00)
-      </div>
-      <div class="exhibit">
-        <strong>Exhibit E</strong><br>
-        <code>D:\HOA\PLA_Financials_extracted\2025-Revised-Budget-02.21.25.txt</code><br>
-        FY2025 revised budget; same 400832 structure
-      </div>
-      <div class="exhibit">
-        <strong>Exhibit F</strong><br>
-        <code>D:\HOA\golf-course-llc.txt</code><br>
-        Entity description; $42,300/mo draw, FY2024 total $695,271.77
-      </div>
-      <div class="exhibit">
-        <strong>Exhibit G</strong><br>
-        <code>D:\HOA\PLA_Financials_extracted\Audited-2024-Operating-Income-St.txt</code><br>
-        Audited FY2024 operating fund; net deficit $(361,302.47)
-      </div>
-      <div class="exhibit">
-        <strong>Exhibit H</strong><br>
-        <code>D:\HOA\Plantation_HOA_Financial_Review.txt</code><br>
-        Financial review index; FY2024/2025 budget and balance sheet totals
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Legal Analysis</h2>
-    <div class="legal-section">
-      <h3>Corroboration vs. Proof</h3>
-      <p>The available extracted documents corroborate the existence of a budgeted, structured $42,300/month Special Activity draw. They do not corroborate an additional irregular $50,000 monthly excess, nor a $136,522 cumulative anomaly. The variance column in every monthly statement is zero for this line item, indicating full compliance with the approved budget.</p>
-    </div>
-    <div class="legal-section">
-      <h3>Recharacterization Not Supported</h3>
-      <p>The claim that transfers were misclassified as LLC revenue is not borne out by the extracted statements. <code>400832 Special Activity Income</code> is recorded as a contra-revenue item in the HOA’s books. The existence of a separate golf course entity and related advances does not, without additional documentation, establish intentional misclassification or fraud.</p>
-    </div>
-    <div class="legal-section">
-      <h3>Burden of Proof</h3>
-      <p>The party advancing the hypothesis must produce primary source documents that reconcile to the same ledger. A blog allegation without exhibits linking to the actual monthly statements, or without a consolidated statement combining <code>400832</code>, <code>400109</code>, and related due-to/from lines, does not meet the evidentiary threshold to alter the determination.</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <h2>Conclusion</h2>
+    <h2 class="section-title">Conclusion</h2>
+    <div class="section-divider"></div>
     <div class="verdict">
       <div class="label">Determination</div>
-      <div class="value" style="color:var(--err)">REFUTED</div>
-      <div class="sub">The hypothesis is unsupported by the financial evidence reviewed.</div>
+      <div class="value" style="color:var(--warn)">PARTIALLY CORROBORATED</div>
+      <div class="sub">Core structural allegations are verified; some specific transaction-level claims require further month-granularity review to prove.</div>
     </div>
     <div class="legal-section" style="margin-top:18px">
       <h3>Reasoning</h3>
-      <p>The extracted ledger documents demonstrate that the $42,300 monthly Special Activity draw is a budgeted, authorized line item with zero variance for January–April 2025. No extracted file contains the $92,300 or $136,522 figures alleged. Without the exact TownCryer.biz article URL and cited exhibits that reconcile to this ledger, the hypothesis cannot be sustained.</p>
+      <p>The extracted records confirm the TownCrier's principal structural claims: (1) December 2025 year-end financials are fabricated; (2) the balance sheet does not balance by ~$3.28 million; (3) a $453,129.67 profit was posted at December year-end and reversed in January 2026; (4) the HOA's equity collapsed from ~$7.77 million to ~$48,691 in roughly two years; (5) the $42,300/month authorized golf draw is real and consistent. The allegation that the draw is misclassified or partially omitted remains plausible but is not rigorously proved at month-level detail from the current extraction. The January 2025 ~$50,000 excess draw claim is not yet proved or disproved and requires 2023–2025 due-to/from or cash-flow month detail.</p>
     </div>
     <div class="legal-section" style="margin-top:10px">
       <h3>Section Notes</h3>
       <textarea class="section-notes" data-section="Conclusion" rows="4" placeholder="Add notes for this section..."></textarea>
-      <div class="section-note-status"></div>
+      <div class="section-notes-status"></div>
     </div>
   </div>
 
   <div class="section">
-    <h2>Conditions to Reopen</h2>
+    <h2 class="section-title">Next Steps / Remaining Gaps</h2>
+    <div class="section-divider"></div>
     <div class="legal-section">
-      <h3>Section Notes</h3>
-      <textarea class="section-notes" data-section="Conditions to Reopen" rows="4" placeholder="Add notes for this section..."></textarea>
-      <div class="section-note-status"></div>
-    </div>
-    <div class="legal-section">
-      <h3>Flip Requirements</h3>
+      <h3>Outstanding Items</h3>
       <ul>
-        <li>Verified TownCryer.biz article URL with cited exhibits referencing specific ledger entries</li>
-        <li>Consolidated statement combining account 400832, 400109, and any golf-course-related due-to/from or advance lines for the same period</li>
-        <li>Board minutes or management letters showing transfers channeled to the golf course outside the 400832 budget line</li>
+        <li>Locate month-level due-to/from or cash-flow statements for December 2024 – March 2025 to confirm or refute the alleged January 2025 ~$50,000 excess draw.</li>
+        <li>Perform a full forensics extraction of the 2021 year-end, 2023 monthly, and audit-suspended-period PDFs currently returned as stub/empty files.</li>
+        <li>Reconcile the $3.28M balance sheet gap to specific line-item adjustments and prepare exhibits for potential admissibility.</li>
       </ul>
     </div>
+    <div class="legal-section">
+      <h3>Test Response Field — Structured Q/A</h3>
+      <p>Use this response area to capture findings, answers, or follow-up queries tied to this case:</p>
+      <ul>
+        <li>Q1: Did the board approve the golf draw inside or outside the 400832 budget line in fiscal years 2024–2025?</li>
+        <li>Q2: Was the $453,129.67 profit intentionally engineered or an arithmetic/template error?</li>
+        <li>Q3: Who authorized the single $4,876,898.14 reserve-funding line and what transaction backs it?</li>
+        <li>Q4: Why did equity destroy from $7,767,960 to $48,692; is this explained by operating losses, distributions, or both?</li>
+        <li>Q5: Is the January 2025 ~$50,000 excess draw corroborated by bank/cash-flow records?</li>
+      </ul>
+    </div>
+    <div class="legal-section section-notes-wrap">
+      <div class="section-label">SECTION NOTES</div>
+      <textarea class="section-notes" data-section="Next Steps / Remaining Gaps" rows="6" placeholder="Add notes for this section..."></textarea>
+      <div class="section-notes-status"></div>
+    </div>
   </div>
-
-
 </div>
 
 <script>
@@ -295,7 +362,7 @@
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'enter') {
         notes[key] = el.value;
         save();
-        const statusEl = el.parentElement.querySelector('.section-note-status');
+        const statusEl = el.parentElement.querySelector('.section-notes-status');
         if (statusEl) setStatus(statusEl, 'Saved ' + new Date().toLocaleString());
       }
     });
