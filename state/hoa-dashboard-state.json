@@ -1,0 +1,158 @@
+{
+  "owner": "HEDSLAPTOP/Hermes",
+  "focus": "Plantation at Leesburg HOA",
+  "generated_at": "2026-06-23T12:45:00-04:00",
+  "sessions": [
+    {
+      "session_id": "20260623_111928_703236",
+      "title": "HOA Monthly Draw Amount Findings",
+      "source": "PLA_Financials_extracted",
+      "timestamp": "2026-06-23T11:19:00-04:00",
+      "status": "completed",
+      "messages": 14,
+      "summary": "Reviewed Jan-Apr 2025 statements; $42,300/mo draw verified with zero variance",
+      "tags": ["financials", "draw", "towncryer"]
+    },
+    {
+      "session_id": "20260623_120000_000000",
+      "title": "HOA Governance & Compliance Open Items Review",
+      "source": "D:\\HOA\\plantation-governance-review-2026-06.txt",
+      "timestamp": "2026-06-23T12:30:00-04:00",
+      "status": "in_progress",
+      "messages": 1,
+      "summary": "Reviewed governance minutes for open items and unanswered questions",
+      "tags": ["governance", "minutes", "open-items"]
+    },
+    {
+      "session_id": "20260622_161900_000001",
+      "title": "Plantation at Leesburg website direct access review #11",
+      "source": "plantationatleesburg.com",
+      "timestamp": "2026-06-22T16:19:00-04:00",
+      "status": "in_progress",
+      "messages": 120,
+      "summary": "109 HOA/Golf Course docs cataloged, deduped, converted, and stored in D:\\HOA; 2024–2026 profitability computed",
+      "tags": ["website", "catalog", "pdf"]
+    }
+  ],
+  "open_items": [
+    {
+      "item": "Suspended 2023 & 2024 CPA audits",
+      "status": "open",
+      "severity": "critical",
+      "source": "plantation-governance-review-2026-06.txt Sec 7",
+      "question": "What is the specific completion date by which the 2023 and 2024 audits will be finished and posted? Who is the CPA firm? What is the engagement letter date?",
+      "deadline": "No public target announced"
+    },
+    {
+      "item": "Cranes Roost golf course irrigation system repair",
+      "status": "open",
+      "severity": "high",
+      "source": "plantation-governance-review-2026-06.txt Sec 10-11",
+      "question": "What is the vendor name, repair estimate, and expected completion date? Why was there no publicly communicated repair timeline after 2+ months of failure?",
+      "deadline": "No timeline provided"
+    },
+    {
+      "item": "2026 vendor bids and contracts missing from HOA website",
+      "status": "open",
+      "severity": "high",
+      "source": "plantation-governance-review-2026-06.txt Sec 8-11; Plantation_HOA_Briefing_Residents_v20260614.txt Severity 1",
+      "question": "Why are 2026 vendor bids and contracts absent from the Contracts section more than 18 months after the statutory deadline? Is the board intentionally excluding Ashley pool renovation and road maintenance contracts?",
+      "deadline": "January 1, 2025 statutory deadline passed"
+    },
+    {
+      "item": "Frisillo v. Plantation at Leesburg HOA lawsuit",
+      "status": "open",
+      "severity": "high",
+      "source": "plantation-governance-review-2026-06.txt Sec 11",
+      "question": "What is the full complaint content? What damages are sought? How does this intersect with the active Fredericks/Eisenhower suit?",
+      "deadline": "Case filed November 7, 2025; contents not publicly available"
+    },
+    {
+      "item": "Capital Contribution Fee (CCF) re-vote timing",
+      "status": "open",
+      "severity": "medium",
+      "source": "plantation-governance-review-2026-06.txt Sec 10",
+      "question": "Will the board bring CCF back for re-vote? If so, when? What changes are proposed given it fell 41 votes short?",
+      "deadline": "Board indicated possible December 2025 re-vote"
+    },
+    {
+      "item": "CCR 10% annual transfer cap compliance",
+      "status": "open",
+      "severity": "critical",
+      "source": "Plantation_HOA_TownCrier_Allegations_Supplement.txt Post 3; plantation-governance-review-2026-06.txt",
+      "question": "Was the CCR 10% annual transfer cap violated in 2025? What are the exact cumulative transfers for 2025 against the $507,600 limit?",
+      "deadline": "Cap applies annually; 2025 data needed"
+    },
+    {
+      "item": "Board social media policy implementation",
+      "status": "open",
+      "severity": "medium",
+      "source": "plantation-governance-review-2026-06.txt Sec 9; Plantation_HOA_Briefing_Residents_v20260614.txt Severity 4",
+      "question": "Was the February 2025 strategy deck 'positive news only' Facebook page created? Is HOA staff time or funds being used? What is the budget line item?",
+      "deadline": "Strategy deck proposed February 2025; status unclear"
+    },
+    {
+      "item": "2025 golf course cash flow projection validation",
+      "status": "open",
+      "severity": "high",
+      "source": "plantation-governance-review-2026-06.txt Sec 2-3; Plantation_HOA_TownCrier_Allegations_Supplement.txt",
+      "question": "Was the board's October 2024 projection of ~$229,000 positive golf cash flow accurate? What is the verified EBITDA for 2025 vs. 2024?",
+      "deadline": "Projection was for 2025; year-end data needed"
+    },
+    {
+      "item": "Reserve withdrawal documentation",
+      "status": "open",
+      "severity": "high",
+      "source": "Plantation_HOA_TownCrier_Allegations_Supplement.txt Post 4; Plantation_HOA_Briefing_Residents_v20260614.txt Severity 4",
+      "question": "Are there board resolutions authorizing the Nov-Dec 2024 reserve withdrawals (~$194K)? What happened to the $84,223.59 gap?",
+      "deadline": "Aug-Sep 2024 audit collapse period"
+    },
+    {
+      "item": "2023 Discretionary Reserve fund destination",
+      "status": "open",
+      "severity": "high",
+      "source": "Plantation_HOA_TownCrier_Allegations_Supplement.txt Post 4",
+      "question": "Where did the $450,000 earmarked for 2023 Discretionary Reserves actually go? The board answered YES 3 times to resident questions about the contribution being made.",
+      "deadline": "2023 fiscal year"
+    },
+    {
+      "item": "Audit methodology change justification",
+      "status": "open",
+      "severity": "medium",
+      "source": "Plantation_HOA_TownCrier_Allegations_Supplement.txt Post 1",
+      "question": "Why did the board change SPA revenue recognition methodology from 2024 to 2025, resulting in ~$516,487 inflated profitability? Was this change approved by the CPA firm?",
+      "deadline": "2023-2025 audit period"
+    },
+    {
+      "item": "January-March 2026 SPA revenue gap",
+      "status": "open",
+      "severity": "critical",
+      "source": "Plantation_HOA_TownCrier_Allegations_Supplement.txt Post 1 & 6",
+      "question": "Why was no SPA 2021 revenue recognized for Jan-Mar 2026 when the HOA continued collecting unbilled special assessments? Where did those collections go?",
+      "deadline": "Q1 2026 financials"
+    }
+  ],
+  "blocked_items": {
+    "google_drive_oauth_upload": {
+      "status": "postponed",
+      "reason": "User decided to keep implementation local-only; dashboard tracking deferred"
+    },
+    "website_monitoring": {
+      "status": "blocked",
+      "reason": "Monitoring pipeline for plantationatleesburg.com not implemented"
+    },
+    "hermes_cdp_config": {
+      "status": "blocked",
+      "reason": "browser.cdp_url config lock unresolved"
+    }
+  },
+  "financials_review_status": {
+    "period": "Jan-Apr 2025",
+    "draw_amount": "$42,300/mo",
+    "variance": "$0 each month",
+    "account": "400832 Special Activity Income",
+    "status": "verified",
+    "hypothesis_determination": "REFUTED",
+    "notes": "No $92,300 or $136,522 found in extracted ledgers"
+  }
+}

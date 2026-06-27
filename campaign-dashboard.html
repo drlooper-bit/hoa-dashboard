@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plantation at Leesburg — Campaign Dashboard</title>
+<style>
+  :root{
+    --bg:#111119;--bg-2:#18182a;--bg-3:#1f1f32;--bg-4:#141422;
+    --text:#d5d8ff;--text-dim:#8090b8;--text-muted:#5c6a8a;
+    --border:#26293b;--accent:#79b8ff;--accent-2:#a78bfa;
+    --ok:#7fd4a2;--warn:#f2c96b;--err:#ff9d9d;--info:#6bb8ff;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--bg);color:var(--text);font:13px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+  .wrap{max-width:1200px;margin:0 auto;padding:28px 24px 60px}
+  header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:18px 0;border-bottom:1px solid var(--border);margin-bottom:24px}
+  header h1{font-size:15px;margin:0;font-weight:700;letter-spacing:.02em}
+  header .meta{color:var(--text-muted);font-size:11.5px;font-weight:500}
+
+  /* TOP BAR */
+  .top-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+  .top-bar button{background:var(--bg-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:.2s}
+  .top-bar button:hover{border-color:var(--accent);color:var(--accent)}
+  .top-bar button.active{background:var(--accent);color:#000;border-color:var(--accent)}
+
+  /* TABS */
+  .tab{display:none}.tab.active{display:block}
+
+  /* KPIS */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+  .kpi{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:center}
+  .kpi .label{color:var(--text-muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;font-weight:700}
+  .kpi .value{font-size:28px;font-weight:800;margin-top:6px}
+  .kpi .sub{font-size:10.5px;color:var(--text-muted);margin-top:4px}
+
+  /* SECTIONS */
+  .section{margin-bottom:28px}
+  .section-title{color:var(--text-dim);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;margin:0 0 8px}
+  .section-divider{height:1px;background:var(--border);margin:6px 0 18px}
+  .card{background:var(--bg-2);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px}
+  .card h3{color:var(--accent);font-size:12px;margin:0 0 10px;text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+
+  /* LISTS */
+  ul.plain{margin:0 0 0 18px;padding:0}
+  ul.plain li{margin:5px 0;line-height:1.55}
+
+  /* TEXT AREAS */
+  .section-notes-wrap{margin-top:10px}
+  .section-label{color:var(--accent);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px;display:block}
+  .section-notes{width:100%;background:var(--bg-4);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 11px;font:inherit;line-height:1.55;resize:vertical}
+  .section-notes:focus{outline:none;border-color:var(--accent)}
+  .section-notes-status{font-size:10.5px;color:var(--text-muted);margin-top:6px;min-height:14px}
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:top}
+  th{color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:10.5px}
+  tr:hover td{background:var(--bg-3)}
+  input[type="text"],input[type="date"],input[type="number"],select,textarea.data-field{background:var(--bg-3);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:7px 9px;font:inherit;width:100%}
+  input:focus,select:focus,textarea.data-field:focus{outline:none;border-color:var(--accent)}
+
+  /* BADGE */
+  .badge{display:inline-block;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+  .badge-ok{background:#1a3a2a;color:var(--ok);border:1px solid #2a5a3a}
+  .badge-warn{background:#3a301a;color:var(--warn);border:1px solid #5a4a2a}
+  .badge-err{background:#3a1a1a;color:var(--err);border:1px solid #5a2a2a}
+  .badge-info{background:#1a2a3a;color:var(--info);border:1px solid #2a3a5a}
+
+  /* MISC */
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .muted{color:var(--text-muted)}
+  .small{font-size:11px}
+  .flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .right{margin-left:auto}
+
+  @media(max-width:700px){.row,.row-3{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>🏛️ Plantation at Leesburg — Campaign Dashboard</h1>
+      <div class="meta">HOA President Campaign · Internal Use Only · Built 2026-06-26</div>
+    </div>
+    <div class="meta">English-only · No public publish · Guide-only</div>
+  </header>
+
+  <div class="top-bar">
+    <button class="active" data-tab="overview">Overview</button>
+    <button data-tab="emails">Email Sequence</button>
+    <button data-tab="proxies">Proxy Tracker</button>
+    <button data-tab="outreach">Outreach Log</button>
+    <button data-tab="qa">Q&A Prep</button>
+    <button data-tab="compliance">Compliance</button>
+    <button data-tab="schedule">Schedule</button>
+    <button data-tab="qr">QR & Branding</button>
+    <button data-tab="notes">Session Notes</button>
+  </div>
+
+  <!-- OVERVIEW TAB -->
+  <div class="tab active" id="tab-overview">
+    <div class="kpis">
+      <div class="kpi"><div class="label">Community Size</div><div class="value">2,820</div><div class="sub">Homes/parcels</div></div>
+      <div class="kpi"><div class="label">Proxy Sign-ups</div><div class="value" id="kpi-proxies">0</div><div class="sub">Tracked</div></div>
+      <div class="kpi"><div class="label">Emails Sent</div><div class="value" id="kpi-emails">0</div><div class="sub">Of 4 planned</div></div>
+      <div class="kpi"><div class="label">Doors Knocked</div><div class="value" id="kpi-doors">0</div><div class="sub">Cumulative</div></div>
+      <div class="kpi"><div class="label">FB Group</div><div class="value" id="kpi-fb">—</div><div class="sub">Concerned Residents</div></div>
+      <div class="kpi"><div class="label">Days to Election</div><div class="value warn" id="kpi-days">—</div><div class="sub">Placeholder set below</div></div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Campaign Snapshot</h2>
+      <div class="section-divider"></div>
+      <div class="row">
+        <div class="card">
+          <h3>Candidate</h3>
+          <div class="flex"><strong>[Name]</strong> <span class="badge badge-info">President</span></div>
+          <div class="muted small">No current/past interaction with sitting board.</div>
+        </div>
+        <div class="card">
+          <h3>Priority 1 (30 days)</h3>
+          <div>Full audit of the HOA including golf courses with a path forward.</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <div class="card">
+          <h3>Key Pillars</h3>
+          <ul class="plain">
+            <li>Financial accountability & modern legal compliance</li>
+            <li>Fair enforcement & due process</li>
+            <li>Restored trust with residents</li>
+            <li>Operational stewardship: golf, reserves, infrastructure</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Current Board (reference)</h3>
+          <ul class="plain">
+            <li>President: Russ Roberson</li>
+            <li>VP: Jerry Tucker</li>
+            <li>Secretary/Treasurer: Geoff Alpert</li>
+            <li>Directors: Nancy Sheahan, Pam Rudolph</li>
+            <li>Manager: Dennis Bard, LCAM</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMAIL TAB -->
+  <div class="tab" id="tab-emails">
+    <div class="kpis">
+      <div class="kpi"><div class="label">Emails Sent</div><div class="value" id="kpi-emails2">0</div><div class="sub">Manual update</div></div>
+      <div class="kpi"><div class="label">Open Rate (est.)</div><div class="value">—</div><div class="sub">Track in email tool</div></div>
+      <div class="kpi"><div class="label">Replies</div><div class="value">—</div><div class="sub">Log in outreach</div></div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">4-Part Email Sequence</h2>
+      <div class="section-divider"></div>
+      <div class="card">
+        <div class="flex"><h3>Email 1 · Introduction</h3><span class="badge badge-warn">Draft</span></div>
+        <p class="muted small">Subject: Hello from your neighbor — I'm stepping up for Plantation</p>
+        <p>Introduce yourself, state that you’re a resident running for President, and frame the campaign around results — not blame.</p>
+        <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email1" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
+      </div>
+      <div class="card">
+        <div class="flex"><h3>Email 2 · Vision & Platform</h3><span class="badge badge-warn">Draft</span></div>
+        <p class="muted small">Subject: Why I'm running — 4 priorities for Plantation</p>
+        <p>Share the four pillars: Transparency/Accountability, Fair Enforcement, Operational Stewardship, Community Trust.</p>
+        <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email2" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
+      </div>
+      <div class="card">
+        <div class="flex"><h3>Email 3 · Meet the Candidate Q&A</h3><span class="badge badge-warn">Draft</span></div>
+        <p class="muted small">Subject: Questions & Answers — Your concerns, my answers</p>
+        <p>Answer top questions: qualifications, why President, lawsuits, dues, golf course, top priority.</p>
+        <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email3" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
+      </div>
+      <div class="card">
+        <div class="flex"><h3>Email 4 · Election Day Reminder</h3><span class="badge badge-warn">Draft</span></div>
+        <p class="muted small">Subject: Election Day is coming — Here's what you need to know</p>
+        <p>Logistics: date/time/location, proxy instructions, bring-a-neighbor ask.</p>
+        <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email4" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROXY TRACKER TAB -->
+  <div class="tab" id="tab-proxies">
+    <div class="flex" style="margin-bottom:12px">
+      <button onclick="exportProxies()" style="background:var(--bg-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px">Export CSV</button>
+      <button onclick="addProxyRow()" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:700">+ Add Entry</button>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <table id="proxy-table">
+        <thead>
+          <tr><th>Resident</th><th>Street/Lot</th><th>Contact</th><th>Proxy Rx?</th><th>Form OK?</th><th>Last Contact</th><th>Status</th><th>Notes</th><th></th></tr>
+        </thead>
+        <tbody id="proxy-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- OUTREACH TAB -->
+  <div class="tab" id="tab-outreach">
+    <div class="kpis">
+      <div class="kpi"><div class="label">Doors Knocked</div><div class="value" id="kpi-doors2">0</div><div class="sub">Cumulative</div></div>
+      <div class="kpi"><div class="label">Friendly</div><div class="value" id="kpi-friendly">0</div><div class="sub">Leaning yes</div></div>
+      <div class="kpi"><div class="label">Undecided</div><div class="value" id="kpi-undecided">0</div><div class="sub">Needs follow-up</div></div>
+      <div class="kpi"><div class="label">Opposed</div><div class="value" id="kpi-opposed">0</div><div class="sub">Not home / no</div></div>
+    </div>
+    <div class="card" style="overflow-x:auto">
+      <table id="outreach-table">
+        <thead>
+          <tr><th>Date</th><th>Name</th><th>Street/Lot</th><th>Reaction</th><th>Issue raised</th><th>Proxy?</th><th>Follow-up</th><th>Notes</th><th></th></tr>
+        </thead>
+        <tbody id="outreach-body"></tbody>
+      </table>
+    </div>
+    <div class="flex" style="margin-top:10px">
+      <button onclick="addOutreachRow()" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:700">+ Add Entry</button>
+    </div>
+  </div>
+
+  <!-- Q&A PREP TAB -->
+  <div class="tab" id="tab-qa">
+    <div class="section"><h2 class="section-title">Crisis / Q&A Prep</h2><div class="section-divider"></div>
+      <div class="card"><h3>Q: "The HOA is already under multiple lawsuits. Aren't you worried?"</h3><p>My practice is to work within the law, ensure transparency, and resolve disputes through procedure rather than personality. Responsible governance is the best defense.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA1" rows="2"></textarea><div class="section-notes-status"></div></div></div>
+      <div class="card"><h3>Q: "Dues have gone up significantly. Do you plan to raise them more?"</h3><p>I want a clean audit and clear budget review first. Any decision about dues requires full financial disclosure and membership approval per Florida statute.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA2" rows="2"></textarea><div class="section-notes-status"></div></div></div>
+      <div class="card"><h3>Q: "Will you represent everyone, not just the Facebook critics?"</h3><p>Yes. I'm running to serve the entire membership. My board service would be open to all residents regardless of prior affiliation.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA3" rows="2"></textarea><div class="section-notes-status"></div></div></div>
+      <div class="card"><h3>Q: "Why President rather than a director seat?"</h3><p>The President sets the agenda, chairs meetings, and represents the board. Residents wanting action on audit, compliance, and transparency need that seat committed to results.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA4" rows="2"></textarea><div class="section-notes-status"></div></div></div>
+      <div class="card"><h3>Q: "What about the golf courses and the LLC structure?"</h3><p>The golf courses are community assets. As President, I'll review the structure, finances, and maintenance agreements to make sure they make sense operationally and financially for the membership.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA5" rows="2"></textarea><div class="section-notes-status"></div></div></div>
+    </div>
+  </div>
+
+  <!-- COMPLIANCE TAB -->
+  <div class="tab" id="tab-compliance">
+    <div class="section"><h2 class="section-title">Election Compliance Checklist</h2><div class="section-divider"></div>
+      <div class="card">
+        <ul class="plain">
+          <li><strong>Notice period</strong> — Follow declaration/bylaws for annual meeting notice (typically 14 days; confirm exact rule in your governing docs).</li>
+          <li><strong>Proxy form requirements</strong> — Confirm whether bylaws require notarization, witness, or specific form language.</li>
+          <li><strong>Quorum</strong> — Confirm quorum requirement so you know the minimum attendance threshold.</li>
+          <li><strong>Electioneering</strong> — Do not campaign in HOA-controlled channels (newsletters, official social pages). Stick to personal outreach, door-knocking, and independent channels.</li>
+          <li><strong>Candidate statement</strong> — Check for word limits if the board publishes ballot statements.</li>
+          <li><strong>Candidate registration/filing deadline</strong> — Identify exact cutoff from the annual meeting notice.</li>
+          <li><strong>Voter rolls</strong> — Verify your contact list against the official owner/parcel roster.</li>
+        </ul>
+        <div class="section-notes-wrap"><span class="section-label">Compliance Notes</span><textarea class="section-notes" data-section="Compliance" rows="4"></textarea><div class="section-notes-status"></div></div>
+      </div>
+    </div>
+    <div class="section"><h2 class="section-title">Florida Statute Quick Reference (Campaign-safe)</h2><div class="section-divider"></div>
+      <div class="card">
+        <ul class="plain">
+          <li><strong>§ 720.303(2)</strong> — Open meetings; 14-day notice for certain votes; 3-minute speaking rights.</li>
+          <li><strong>§ 720.303(4)/(8)</strong> — Records access and website posting for 100+ parcel associations.</li>
+          <li><strong>§ 720.303(6)/(7)</strong> — Annual audit when revenues ≥ $500K.</li>
+          <li><strong>§ 720.305</strong> — Fine/suspension due process: 14-day written notice, independent hearing committee, 90-day window.</li>
+          <li><strong>§ 720.304 / 720.3045</strong> — Property rights protections (holiday decor, trash cans, artificial turf, etc.).</li>
+          <li><strong>§ 720.309</strong> — Special assessment notice/vote requirements.</li>
+          <li><strong>§ 720.3033</strong> — Board education: 4-hour curriculum within 90 days of taking office.</li>
+          <li><strong>FS 812.014</strong> — Unauthorized use of association debit cards = theft.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE TAB -->
+  <div class="tab" id="tab-schedule">
+    <div class="section"><h2 class="section-title">Timeline / Countdown</h2><div class="section-divider"></div>
+      <div class="card">
+        <div class="row-3">
+          <div><label class="small muted">Election date</label><input type="date" id="election-date" onchange="updateCountdown()"></div>
+          <div><label class="small muted">Proxy deadline</label><input type="date" id="proxy-date" onchange="updateCountdown()"></div>
+          <div><label class="small muted">Filing deadline</label><input type="date" id="filing-date"></div>
+        </div>
+        <div class="section-notes-wrap"><span class="section-label">Schedule Notes</span><textarea class="section-notes" data-section="Schedule" rows="3"></textarea><div class="section-notes-status"></div></div>
+      </div>
+
+      <div class="section" style="margin-top:18px"><h2 class="section-title">30-Day Win Plan</h2><div class="section-divider"></div>
+        <div class="card">
+          <ul class="plain">
+            <li><strong>Days 1–3:</strong> File candidacy (by deadline). Secure proxy form supply. Confirm quorum / proxy rules.</li>
+            <li><strong>Days 4–10:</strong> Door-knock sweep of 2 streets; log reactions; distribute QR stickers and proxy guides.</li>
+            <li><strong>Days 11–17:</strong> Send Email 1 (Introduction) to limited email list.</li>
+            <li><strong>Days 18–24:</strong> Send Email 2 (Platform). Follow up with proxy requests.</li>
+            <li><strong>Days 25–30:</strong> Send Email 3 (Q&A). Final proxy push. Confirm proxies collected.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QR TAB -->
+  <div class="tab" id="tab-qr">
+    <div class="section"><h2 class="section-title">QR Code & Branding</h2><div class="section-divider"></div>
+      <div class="row">
+        <div class="card">
+          <h3>Concerned Residents of the Plantation (Facebook)</h3>
+          <p class="small muted">Current status: Link shared via WhatsApp. No public website.</p>
+          <div class="section-notes-wrap"><span class="section-label">Facebook URL</span><input type="text" id="fb-url" class="data-field" placeholder="https://facebook.com/groups/..." oninput="saveQRData()"></div>
+        </div>
+        <div class="card">
+          <h3>QR Sticker Copy</h3>
+          <p class="small muted">2×3 sticker recommendation</p>
+          <p>Join the conversation<br><strong>Concerned Residents of the Plantation</strong><br>A community forum for neighbors.<br>Scanning opens our independent Facebook group.<br>Paid for by [Name]</p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <h3>Campaign Contact Block</h3>
+        <div class="row">
+          <div><label class="small muted">Phone</label><input type="text" id="camp-phone" class="data-field" placeholder="(352) 000-0000" oninput="saveQRData()"></div>
+          <div><label class="small muted">Email</label><input type="text" id="camp-email" class="data-field" placeholder="candidate@email.com" oninput="saveQRData()"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES TAB -->
+  <div class="tab" id="tab-notes">
+    <div class="section"><h2 class="section-title">Free-form Session Notes</h2><div class="section-divider"></div>
+      <div class="card">
+        <textarea class="section-notes" data-section="FreeNotes" rows="14" style="min-height:260px" placeholder="Jot anything here — it auto-saves locally."></textarea><div class="section-notes-status"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // TAB SWITCHING
+  document.querySelectorAll('.top-bar button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+      document.querySelectorAll('.top-bar button').forEach(function(x){x.classList.remove('active')});
+      var id='tab-'+this.getAttribute('data-tab');
+      document.getElementById(id).classList.add('active');
+      this.classList.add('active');
+    });
+  });
+
+  // NOTES LOCALSTORAGE
+  const KEY='campaign_dashboard_notes_v1';
+  const data=JSON.parse(localStorage.getItem(KEY)||'{}');
+
+  function save(){localStorage.setItem(KEY,JSON.stringify(data));}
+  function setStatus(el,text){el.textContent=text;}
+
+  document.querySelectorAll('.section-notes').forEach(function(el){
+    const k=el.getAttribute('data-section');
+    if(k && data[k]) el.value=data[k];
+    el.addEventListener('input',function(){data[k]=el.value;save();});
+    el.addEventListener('keydown',function(e){
+      if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='enter'){save();const s=el.parentElement.querySelector('.section-notes-status');if(s) setStatus(s,'Saved '+new Date().toLocaleString());}
+    });
+  });
+
+  // QR DATA LOCALSTORAGE
+  const QR_KEY='campaign_qr_data_v1';
+  const qr=JSON.parse(localStorage.getItem(QR_KEY)||'{}');
+  function saveQRData(){
+    qr.fb=document.getElementById('fb-url').value;
+    qr.phone=document.getElementById('camp-phone').value;
+    qr.email=document.getElementById('camp-email').value;
+    localStorage.setItem(QR_KEY,JSON.stringify(qr));
+  }
+  document.getElementById('fb-url').value=qr.fb||'';
+  document.getElementById('camp-phone').value=qr.phone||'';
+  document.getElementById('camp-email').value=qr.email||'';
+
+  // PROXY TRACKER
+  const PROXY_KEY='campaign_proxies_v1';
+  let proxies=JSON.parse(localStorage.getItem(PROXY_KEY)||'[]');
+  function saveProxies(){localStorage.setItem(PROXY_KEY,JSON.stringify(proxies));updateKPIs();}
+  function renderProxies(){
+    const tbody=document.getElementById('proxy-body');tbody.innerHTML='';
+    proxies.forEach(function(p,idx){
+      const tr=document.createElement('tr');
+      tr.innerHTML='<td><input type="text" data-i="'+idx+'" data-k="name" class="data-field pi" value="'+(p.name||'')+'"></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="lot" class="data-field pi" value="'+(p.lot||'')+'" style="min-width:90px"></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="contact" class="data-field pi" value="'+(p.contact||'')+'"></td>'+
+        '<td><select data-i="'+idx+'" data-k="rx" class="pi"><option value="">—</option><option value="Y"'+(p.rx==='Y'?' selected':'')+'>Y</option><option value="N"'+(p.rx==='N'?' selected':'')+'>N</option></select></td>'+
+        '<td><select data-i="'+idx+'" data-k="form" class="pi"><option value="">—</option><option value="Y"'+(p.form==='Y'?' selected':'')+'>Y</option><option value="N"'+(p.form==='N'?' selected':'')+'>N</option></select></td>'+
+        '<td><input type="date" data-i="'+idx+'" data-k="last" class="data-field pi" value="'+(p.last||'')+'"></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="status" class="data-field pi" value="'+(p.status||'')+'"></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="notes" class="data-field pi" value="'+(p.notes||'')+'"></td>'+
+        '<td><button onclick="delProxy('+idx+')" style="background:transparent;color:var(--err);border:1px solid var(--border);border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px">✕</button></td>';
+      tbody.appendChild(tr);
+    });
+    document.querySelectorAll('.pi').forEach(function(el){
+      el.addEventListener('change',function(){
+        const i=parseInt(this.getAttribute('data-i')), k=this.getAttribute('data-k');
+        proxies[i][k]=this.value;saveProxies();
+      });
+    });
+  }
+  window.addProxyRow=function(){
+    proxies.push({name:'',lot:'',contact:'',rx:'',form:'',last:'',status:'',notes:''});
+    saveProxies();renderProxies();
+  };
+  window.delProxy=function(i){proxies.splice(i,1);saveProxies();renderProxies();};
+  window.exportProxies=function(){
+    const header=['Resident','Lot','Contact','Proxy Received','Form Complete','Last Contact','Status','Notes'];
+    const rows=proxies.map(p=>[p.name||'',p.lot||'',p.contact||'',p.rx||'',p.form||'',p.last||'',p.status||'',(p.notes||'').replace(/"/g,'""')]);
+    const csv=[header, ...rows].map(r=>r.map(c=>'"'+c+'"').join(',')).join('\n');
+    const blob=new Blob([csv],{type:'text/csv'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='proxy_tracker_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  };
+
+  // OUTREACH TRACKER
+  const OUT_KEY='campaign_outreach_v1';
+  let outreach=JSON.parse(localStorage.getItem(OUT_KEY)||'[]');
+  function saveOutreach(){localStorage.setItem(OUT_KEY,JSON.stringify(outreach));updateKPIs();}
+  function renderOutreach(){
+    const tbody=document.getElementById('outreach-body');tbody.innerHTML='';
+    outreach.forEach(function(r,idx){
+      const tr=document.createElement('tr');
+      tr.innerHTML='<td><input type="date" data-i="'+idx+'" data-k="date" class="data-field oi" value="'+(r.date||'')+'"></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="name" class="data-field oi" value="'+(r.name||'')+'"></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="lot" class="data-field oi" value="'+(r.lot||'')+'" style="min-width:90px"></td>'+
+        '<td><select data-i="'+idx+'" data-k="reaction" class="oi"><option value="">—</option><option value="Friendly"'+(r.reaction==='Friendly'?' selected':'')+'>Friendly</option><option value="Undecided"'+(r.reaction==='Undecided'?' selected':'')+'>Undecided</option><option value="Opposed"'+(r.reaction==='Opposed'?' selected':'')+'>Opposed</option><option value="NotHome"'+(r.reaction==='NotHome'?' selected':'')+'>Not home</option></select></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="issue" class="data-field oi" value="'+(r.issue||'')+'"></td>'+
+        '<td><select data-i="'+idx+'" data-k="proxy" class="oi"><option value="">—</option><option value="Y"'+(r.proxy==='Y'?' selected':'')+'>Yes</option><option value="N"'+(r.proxy==='N'?' selected':'')+'>No</option></select></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="follow" class="data-field oi" value="'+(r.follow||'')+'"></td>'+
+        '<td><input type="text" data-i="'+idx+'" data-k="notes" class="data-field oi" value="'+(r.notes||'')+'"></td>'+
+        '<td><button onclick="delOutreach('+idx+')" style="background:transparent;color:var(--err);border:1px solid var(--border);border-radius:6px;padding:5px 8px;cursor:pointer;font-size:11px">✕</button></td>';
+      tbody.appendChild(tr);
+    });
+    document.querySelectorAll('.oi').forEach(function(el){
+      el.addEventListener('change',function(){
+        const i=parseInt(this.getAttribute('data-i')), k=this.getAttribute('data-k');
+        outreach[i][k]=this.value;saveOutreach();
+      });
+    });
+  }
+  window.addOutreachRow=function(){
+    outreach.push({date:'',name:'',lot:'',reaction:'',issue:'',proxy:'',follow:'',notes:''});
+    saveOutreach();renderOutreach();
+  };
+  window.delOutreach=function(i){outreach.splice(i,1);saveOutreach();renderOutreach();};
+
+  function updateKPIs(){
+    document.getElementById('kpi-proxies').textContent=proxies.length;
+    document.getElementById('kpi-doors').textContent=outreach.length;
+    document.getElementById('kpi-doors2').textContent=outreach.length;
+    let friendly=0,undecided=0,opposed=0;
+    outreach.forEach(r=>{if(r.reaction==='Friendly')friendly++;else if(r.reaction==='Undecided')undecided++;else if(r.reaction==='Opposed')opposed++;});
+    document.getElementById('kpi-friendly').textContent=friendly;
+    document.getElementById('kpi-undecided').textContent=undecided;
+    document.getElementById('kpi-opposed').textContent=opposed;
+  }
+
+  window.updateCountdown=function(){
+    const d=document.getElementById('election-date').value;
+    document.getElementById('kpi-days').textContent=d?Math.ceil((new Date(d)-new Date())/(1000*60*60*24)):'—';
+  };
+
+  // INIT
+  renderProxies();
+  renderOutreach();
+  updateKPIs();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+TO:          [RECIPIENT]
+FROM:        Daniel Looper / HEDS Consulting
+SUBJECT:     Plantation at Leesburg HOA — Open Governance Items & Unanswered Questions
+DATE:        June 23, 2026
+ATTACHMENTS: None
+
+---
+
+Dear [NAME],
+
+I reviewed the HOA governance records currently on file. Below are outstanding items and unanswered questions that appear to require disclosure, response, or further verification.
+
+SEVERITY 1 — MISSING CONTRACTS / WEBSITE POSTING FAILURES
+2026 vendor bids and contracts are absent from the HOA website’s Contracts section. Florida Statute § 720.303(8) required full posting by January 1, 2025. More than eighteen months later, the gap remains.
+
+Unanswered questions:
+- Why are Ashley pool renovation and road maintenance bids not posted?
+- Does the board maintain a compliance checklist for § 720.303(8)?
+- When will the 2026 contracts be uploaded?
+
+SEVERITY 2 — SUSPENDED 2023 AND 2024 AUDITS
+The external auditor suspended both audits in December 2024. No completion date, engagement letter date, or CPA firm name was provided in the board materials reviewed.
+
+Unanswered questions:
+- What is the specific expected completion date for the 2023 and 2024 audits?
+- Why is there no statutory-compliant contingency plan for auditor unavailability?
+- What accounting methodology change was applied for 2025, and what authorized it?
+
+SEVERITY 3 — CCR TRANSFER CAP COMPLIANCE
+The CCR amendment caps annual HOA transfers to golf operations at 10% of annual revenue. Review of transfer activity suggests the board may be on a trajectory to exceed that cap in 2025.
+
+Unanswered questions:
+- What is the exact cumulative transfer total for 2025 through the most recent reporting date?
+- What documentation confirms compliance with the CCR 10% limit?
+- Was this cap factored into the CCF messaging?
+
+SEVERITY 4 — RESERVE WITHDRAWAL EXPLANATIONS
+Multiple findings suggest unexplained reserve withdrawals and a stated reserve increase that does not match the underlying account movement.
+
+Unanswered questions:
+- Where did the 2023 Discretionary Reserve ($450,000) actually go, given that the board publicly affirmed the contribution was made?
+- What board resolutions authorized the November–December 2024 withdrawals (aggregate approximately $194,000)?
+- What explains the $84,223.59 variance between the claimed Hurricane Milton expenditure and actual withdrawals?
+- If the reserve balance decreased approximately $134,985 from January 2024 to January 2025, what offset accounting entries correct the public statement that reserves increased $70,000?
+
+SEVERITY 5 — SPA ACCOUNTING AND COLLECTION GAP (JANUARY–MARCH 2026)
+Financial summaries reviewed show no SPA 2021 revenue recognized for January, February, or March 2026, while HOA collections continued.
+
+Unanswered questions:
+- Where were the un-billed/unrecognized SPA collections recorded in Q1 2026?
+- Why did recognition stop as of January 1, 2026 if debt service and assessments continued?
+- What is the auditor-reviewed explanation for the January–March 2026 gap?
+
+SEVERITY 6 — CRANES ROOST IRRIGATION FAILURE
+The Cranes Roost irrigation system was inoperative for more than two months without a communicated repair timeline.
+
+Unanswered questions:
+- What is the vendor work order, repair estimate, and expected completion date?
+- What revenue loss has been attributed to this outage through the repair date?
+- How does the board plan to offset revenue loss while the system is down?
+
+ACTIVE LITIGATION NOTE
+Two lawsuits are on record:
+1. Fredericks/Eisenhower v. Plantation at Leesburg HOA (Case No. 35-2024-CA-001694-AXXX-01)
+2. Frisillo v. Plantation at Leesburg HOA (filed November 7, 2025)
+
+The complaint contents for the Frisillo matter remain unavailable from public sources.
+
+REQUESTED RESPONSE
+Please acknowledge receipt and provide written responses to the questions above. Where a response requires records production under § 720.303(4)–(5), please confirm the ten-business-day timeline and delivery method.
+
+Regards,
+
+Daniel Looper
+Managing Director
+HEDS Consulting
+[REDACTED]
+
+---
+                                    
+HEDS Consulting Assessment — June 23, 2026
+Overall finding: Partially supported. The Town Cryer analysis is not a full audit, but specific dollar-level claims align with anomalies already on record and require reconciliation by the board.
+
+Summary findings:
+- Suspended audits and incomplete website posting are confirmed by HOA-published minutes.
+- Reserve movement contradicts the board’s own public statements.
+- Multiple transfer and SPA figures mathematically inconsistent with published financials.
+- Certain high-dollar claims remain outside the extractable evidence set and were not fully evaluated.
+
+Specific support status:
+- FAIL: Audits completed in 2024 — COMPLETELY REFUTED by official HOA records.
+- FAIL: Website posting compliance — COMPLETELY REFUTED.
+- UNSUPPORTED: Reserve increase claim — MATH DOES NOT SUPPORT stated figure; official statement likely incorrect.
+- PARTIALLY SUPPORTED: 2025 golf funding methodological concerns — directional only; sample review is not a full audit.
+- UNCHANGED: 2023 Discretionary Reserve contribution — remains unverified.
+
+---
+
+Saved to: C:\Users\drloo\OneDrive\Documents\HEDS\hoa-dashboard\HOA-Open-Items-Email.txt

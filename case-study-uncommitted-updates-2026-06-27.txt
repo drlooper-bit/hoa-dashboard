@@ -1,0 +1,25 @@
+PENDING COMMIT / PUSH BLOCKER — GitHub auth invalid
+Repo: https://github.com/drlooper-bit/hoa-dashboard
+Commit: Add Plantation bylaws / statute references to Town Crier case dashboard
+Changes applied to: C:\Users\drloo\OneDrive\Documents\HEDS\hoa-dashboard\index.html
+Push blocked by: HTTPS auth failure after `git push`
+
+FILES MODIFIED
+- C:\Users\drloo\OneDrive\Documents\HEDS\hoa-dashboard\index.html
+
+CHANGE SUMMARY
+- Added new dashboard section: Statute / Bylaws Mapping
+  * Florida Governance Framework for This Case
+  * How the Bylaws Relate to the Allegations
+- Added notes textarea for the new section: Statute / Bylaws Mapping
+- Added to Case Links / Local Case Work Papers:
+  * C:\Users\drloo\OneDrive\Documents\HOA\bylaws_violations_brief.txt
+  * C:\Users\drloo\OneDrive\Documents\HOA\Plantation_HOA_Bylaws_Violations_Analysis.html
+- Added next step:
+  * Validate whether board actions affecting assessments, meetings, and document access match the procedural requirements in the Plantation at Leesburg Bylaws and Second Amended Restrictions.
+- Added test response Q6:
+  * Do the bylaws and recorded CCRs contain a 10% annual transfer cap, and was it breached in 2025?
+
+MANUAL ACTION REQUIRED
+- Re-authenticate GitHub for C:\Users\drloo\OneDrive\Documents\HEDS\hoa-dashboard
+- Run: git push origin main
