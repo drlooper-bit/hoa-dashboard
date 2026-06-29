@@ -163,25 +163,27 @@
       <div class="card">
         <div class="flex"><h3>Email 1 · Introduction</h3><span class="badge badge-warn">Draft</span></div>
         <p class="muted small">Subject: Hello from your neighbor — I'm stepping up for Plantation</p>
-        <p>Introduce yourself, state that you’re a resident running for President, and frame the campaign around results — not blame.</p>
+        <p>My name is Daniel Looper, and I've called Plantation at Leesburg home for several years. I'm not a politician — I'm a resident who believes the best way to serve this community is to step out of the stands and onto the field. I'm running for President because this community deserves leadership that puts residents first, operates within Florida law, and communicates clearly.</p>
+        <p>I want to run a campaign on results: completing a full audit, restoring transparent bidding, ensuring fair enforcement, and making sure our golf courses are maintained professionally. If you're curious, I'd love to earn your vote. Reply to this email or join our discussion group on Facebook.</p>
         <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email1" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
       </div>
       <div class="card">
         <div class="flex"><h3>Email 2 · Vision & Platform</h3><span class="badge badge-warn">Draft</span></div>
         <p class="muted small">Subject: Why I'm running — 4 priorities for Plantation</p>
-        <p>Share the four pillars: Transparency/Accountability, Fair Enforcement, Operational Stewardship, Community Trust.</p>
+        <p>1) <strong>Transparency & Financial Accountability.</strong> Restore trust through statutory compliance, published financials, and independent oversight.<br>2) <strong>Fair Enforcement & Due Process.</strong> Florida law protects members with notice, hearing rights, and independent committees.<br>3) <strong>Operational Stewardship.</strong> Our golf courses, clubhouses, and common areas are community assets. They need professional maintenance and clear accounting.<br>4) <strong>Community Trust & Communication.</strong> Regular accurate updates, open meetings, and accessible leadership.</p>
+        <p>In practice: I'll request an external audit covering the HOA and golf courses in my first 30 days; review enforcement for statutory compliance; publish contract and bid information; and restore predictable reserve planning.</p>
         <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email2" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
       </div>
       <div class="card">
         <div class="flex"><h3>Email 3 · Meet the Candidate Q&A</h3><span class="badge badge-warn">Draft</span></div>
         <p class="muted small">Subject: Questions & Answers — Your concerns, my answers</p>
-        <p>Answer top questions: qualifications, why President, lawsuits, dues, golf course, top priority.</p>
+        <p><strong>Q:</strong> What qualifies you? <strong>A:</strong> Daniel Looper, founder of Heavy Equipment Dealer Solutions (HEDS). Decades of operational risk and forensic financial governance.<br><strong>Q:</strong> Why run for President? <strong>A:</strong> The President sets the agenda. I need that seat to drive audit and compliance.<br><strong>Q:</strong> Suits against the HOA? <strong>A:</strong> Responsible governance and transparent procedures are the best protection.<br><strong>Q:</strong> Dues? <strong>A:</strong> Any increase requires full disclosure and membership approval.<br><strong>Q:</strong> Golf and the LLC? <strong>A:</strong> Community assets need professional management with finances separate from residential funds.</p>
         <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email3" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
       </div>
       <div class="card">
         <div class="flex"><h3>Email 4 · Election Day Reminder</h3><span class="badge badge-warn">Draft</span></div>
         <p class="muted small">Subject: Election Day is coming — Here's what you need to know</p>
-        <p>Logistics: date/time/location, proxy instructions, bring-a-neighbor ask.</p>
+        <p>Election day is [DATE]. You can attend the annual meeting in person or vote by proxy if you can’t make it. Florida law allows proxy voting; the form is available at the HOA office. Complete it early and keep a copy for your records. Bring a neighbor.</p>
         <div class="section-notes-wrap"><span class="section-label">Status / Delivery Notes</span><textarea class="section-notes" data-section="Email4" rows="3" placeholder="Sent date, list used, follow-up actions..."></textarea><div class="section-notes-status"></div></div>
       </div>
     </div>
@@ -189,6 +191,17 @@
 
   <!-- PROXY TRACKER TAB -->
   <div class="tab" id="tab-proxies">
+    <div class="section"><h2 class="section-title">How to Vote by Proxy</h2><div class="section-divider"></div>
+      <div class="card">
+        <p><strong>What is a proxy?</strong> A legal form authorizing another person to vote on your behalf at the annual meeting. Use it if you’re traveling, have a conflict, or can’t attend.</p>
+        <ul class="plain">
+          <li>You can authorize any adult resident or member.</li>
+          <li>Be specific if you want your proxy to vote a certain way.</li>
+          <li>If the form is silent, the proxy holder may vote as they choose.</li>
+        </ul>
+        <p class="small muted">Steps: 1) Get the official HOA proxy form at the office (25201 US Hwy 27, Leesburg, FL 34748) or from the campaign. 2) Complete owner name, parcel, proxy name, date, and signature. 3) Confirm notarization/witness requirements with the HOA office. 4) Return before deadline.</p>
+      </div>
+    </div>
     <div class="flex" style="margin-bottom:12px">
       <button onclick="exportProxies()" style="background:var(--bg-2);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px">Export CSV</button>
       <button onclick="addProxyRow()" style="background:var(--accent);color:#000;border:none;border-radius:8px;padding:8px 12px;cursor:pointer;font-size:12px;font-weight:700">+ Add Entry</button>
@@ -212,6 +225,10 @@
       <div class="kpi"><div class="label">Opposed</div><div class="value" id="kpi-opposed">0</div><div class="sub">Not home / no</div></div>
     </div>
     <div class="card" style="overflow-x:auto">
+      <h3>Flyer / Postcard Copy (internal use only)</h3>
+      <p><strong>FRONT</strong><br>A STEADY HAND FOR PLANTATION AT LEESBURG<br>DANIEL LOOPER FOR HOA PRESIDENT<br>STRONGER GOVERNANCE | FAIRER PROCESS | GREATER TRUST</p>
+      <p><strong>BACK</strong><br>Three priorities that matter to you:<br>1) FULL AND FAIR AUDIT — HOA and golf courses reviewed in the first 30 days.<br>2) TRANSPARENT OPERATIONS — Florida-law compliant records, posted contracts, honest bids, and clear budgets.<br>3) FAIR ENFORCEMENT — 14-day written notice, independent hearing committees, and respectful treatment for all residents.</p>
+      <p class="small muted">Contact: [Phone] | [Email] | [FB group URL]<br>Paid for by Daniel Looper for HOA President</p>
       <table id="outreach-table">
         <thead>
           <tr><th>Date</th><th>Name</th><th>Street/Lot</th><th>Reaction</th><th>Issue raised</th><th>Proxy?</th><th>Follow-up</th><th>Notes</th><th></th></tr>
@@ -231,7 +248,7 @@
       <div class="card"><h3>Q: "Dues have gone up significantly. Do you plan to raise them more?"</h3><p>I want a clean audit and clear budget review first. Any decision about dues requires full financial disclosure and membership approval per Florida statute.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA2" rows="2"></textarea><div class="section-notes-status"></div></div></div>
       <div class="card"><h3>Q: "Will you represent everyone, not just the Facebook critics?"</h3><p>Yes. I'm running to serve the entire membership. My board service would be open to all residents regardless of prior affiliation.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA3" rows="2"></textarea><div class="section-notes-status"></div></div></div>
       <div class="card"><h3>Q: "Why President rather than a director seat?"</h3><p>The President sets the agenda, chairs meetings, and represents the board. Residents wanting action on audit, compliance, and transparency need that seat committed to results.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA4" rows="2"></textarea><div class="section-notes-status"></div></div></div>
-      <div class="card"><h3>Q: "What about the golf courses and the LLC structure?"</h3><p>The golf courses are community assets. As President, I'll review the structure, finances, and maintenance agreements to make sure they make sense operationally and financially for the membership.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA5" rows="2"></textarea><div class="section-notes-status"></div></div></div>
+      <div class="card"><h3>Q: "What about the golf courses and the LLC structure?"</h3><p>The golf courses are community assets, but our current $42,300/month subsidy is unsustainable. I am proposing we present a choice between two clear, financially modeled directions: <strong>Direction A</strong> (Downsize Otter Creek to a 9-hole Par-3 and convert the remaining acreage to nature trails and pocket parks to cut maintenance by 40-50% and phase out the subsidy) and <strong>Direction B</strong> (Keep both 18-hole courses by hiring a professional golf management firm, immediate irrigation repairs, and tapering the subsidy to $0 over 3-years). We should demand a full independent audit and put these two options to a community-wide ballot.</p><div class="section-notes-wrap"><span class="section-label">Notes</span><textarea class="section-notes" data-section="QA5" rows="2"></textarea><div class="section-notes-status"></div></div></div>
     </div>
   </div>
 
@@ -287,7 +304,23 @@
             <li><strong>Days 11–17:</strong> Send Email 1 (Introduction) to limited email list.</li>
             <li><strong>Days 18–24:</strong> Send Email 2 (Platform). Follow up with proxy requests.</li>
             <li><strong>Days 25–30:</strong> Send Email 3 (Q&A). Final proxy push. Confirm proxies collected.</li>
-          </ul>
+            </ul>
+            <div class="section" style="margin-top:18px"><h2 class="section-title">Community Issue Tracker Categories</h2><div class="section-divider"></div>
+            <div class="card">
+              <ul class="plain">
+                <li>Financial audit / reserves / special assessments</li>
+                <li>Golf course issues (Brightview, LLC, equipment revenue, deferred maintenance)</li>
+                <li>Contractor / vendor documentation and performance</li>
+                <li>Enforcement / fines / due process records</li>
+                <li>Records access / website / communication logs</li>
+                <li>Roads / grounds / drainage / retention ponds</li>
+                <li>Clubhouse / pool / amenity maintenance</li>
+                <li>Security / gate access / incident reports</li>
+                <li>Proxy / election / ballots / meeting notices</li>
+                <li>Other: log detail in Notes / Outreach</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
